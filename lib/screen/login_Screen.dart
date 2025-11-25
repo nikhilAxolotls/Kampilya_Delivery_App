@@ -27,7 +27,7 @@ class _LoginscreenState extends State<Loginscreen> {
   final Email = TextEditingController();
   final password = TextEditingController();
   bool _obscureText = true;
-  bool isChecked = false;
+  bool isChecked = true;
   String loginpage = "";
   void _toggle() {
     setState(() {
@@ -228,6 +228,8 @@ class _LoginscreenState extends State<Loginscreen> {
                           onclick: () {
                             if (_formKey.currentState?.validate() ?? false) {
                               login(Email.text, password.text);
+                            
+                              save("Remember", isChecked);
                               initPlatformState();
                             }
                           },

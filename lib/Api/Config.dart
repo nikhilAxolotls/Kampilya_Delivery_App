@@ -10,6 +10,12 @@ class Config {
 
   static const String path = baseUrl + '/rider_api/';
 
+  //--------------- Store path ----------------//
+  static const String storePath = baseUrl + '/store_api/';
+
+  //--------------- User path ----------------//
+  static const String userPath = baseUrl + '/user_api/';
+
   static const String loginApi = "u_login_user.php";
   static const String dashboard = 'u_dashboard.php';
   static const String myOrderApi = "u_order_history.php";
@@ -29,4 +35,9 @@ class Config {
   static const String deletAccount = "acc_delete.php";
 
   static const String conpleteDeliveries = "completedate.php";
+  //---------------store Products ----------------//
+  static const String storeProductsApi = "product_list.php";
+
+  //--------------- User Profile ----------------//
+  static const String userStoreDataApi = "u_store_data.php";
 }

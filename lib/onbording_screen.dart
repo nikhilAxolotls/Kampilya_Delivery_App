@@ -279,6 +279,8 @@
 // ignore_for_file: camel_case_types, use_key_in_widget_constructors, annotate_overrides, prefer_const_literals_to_create_immutables, file_names, unused_element, prefer_const_constructors, prefer_typing_uninitialized_variables, sort_child_properties_last, prefer_interpolation_to_compose_strings, unused_local_variable
 
 import 'dart:async';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:milkmandeliveryboynew/Api/data_store.dart';
 import 'package:milkmandeliveryboynew/helpar/fontfamily_model.dart';
 import 'package:milkmandeliveryboynew/screen/bottombar_screen.dart';
@@ -286,6 +288,11 @@ import 'package:milkmandeliveryboynew/screen/login_Screen.dart';
 import 'package:milkmandeliveryboynew/utils/Colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+//location points
+var lat;
+var long;
+var address;
 
 class onbording extends StatefulWidget {
   const onbording({Key? key}) : super(key: key);
@@ -298,16 +305,84 @@ class _onbordingState extends State<onbording> {
   @override
   void initState() {
     super.initState();
+    
+    // Fetch location first, then navigate after delay
+    getCurrentLatAndLong().then((_) {
+      Timer(
+        const Duration(seconds:2),
+        () => getData.read("Firstuser") != true
+            ? Get.to(() => BoardingPage())
+            : getData.read("Remember") != true
+                ? Get.to(() => const Loginscreen())
+                : Get.to(() => BottoBarScreen()),
+      );
+    });
+  }
 
-    Timer(
-      const Duration(seconds: 3),
-      () => getData.read("Firstuser") != true
-          ? Get.to(() => BoardingPage())
-          : getData.read("Remember") != true
-          ? Get.to(() => const Loginscreen())
-          : Get.to(() => BottoBarScreen()),
+// location Cordinates
+ Future<Position> locateUser() async {
+    return Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
     );
   }
+  
+  getCurrentLatAndLong() async {
+    try {
+      LocationPermission permission = await Geolocator.checkPermission();
+
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          print("Location permission denied by user");
+          return;
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        print("Location permission permanently denied");
+        Geolocator.openLocationSettings();
+        return;
+      }
+
+      // Permission granted, get location
+      var currentLocation = await locateUser();
+      lat = currentLocation.latitude;
+      long = currentLocation.longitude;
+
+      // Get address from coordinates
+      try {
+        List<Placemark> placemarks = await placemarkFromCoordinates(
+          currentLocation.latitude,
+          currentLocation.longitude,
+        );
+
+        if (placemarks.isNotEmpty) {
+          Placemark place = placemarks[0];
+          address =
+              '${place.name?.isNotEmpty == true ? place.name! + ', ' : ''}'
+              '${place.thoroughfare?.isNotEmpty == true ? place.thoroughfare! + ', ' : ''}'
+              '${place.subLocality?.isNotEmpty == true ? place.subLocality! + ', ' : ''}'
+              '${place.locality?.isNotEmpty == true ? place.locality! + ', ' : ''}'
+              '${place.subAdministrativeArea?.isNotEmpty == true ? place.subAdministrativeArea! + ', ' : ''}'
+              '${place.postalCode?.isNotEmpty == true ? place.postalCode! + ', ' : ''}'
+              '${place.administrativeArea?.isNotEmpty == true ? place.administrativeArea : ''}';
+        }
+      } catch (e) {
+        print("Geocoding error: $e");
+        address = "Unable to fetch address";
+      }
+
+      if (mounted) {
+        setState(() {
+          lat = currentLocation.latitude;
+          long = currentLocation.longitude;
+        });
+      }
+    } catch (e) {
+      print("Location error: $e");
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {

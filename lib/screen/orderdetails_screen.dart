@@ -590,50 +590,7 @@ class _OrderdetailsScreenState extends State<OrderdetailsScreen> {
                               subtitle:
                                   "${currency}${myOrderController.orderInformetionInfo?.orderdata.storeCharge}",
                             ),
-                            // SizedBox(
-                            //   height: 13,
-                            // ),
-
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.start,
-                            //   children: [
-                            //     Text(
-                            //       "Store Address",
-                            //       style: TextStyle(
-                            //         fontFamily: FontFamily.gilroyBold,
-                            //         fontSize: 13,
-                            //         color: greytext,
-                            //       ),
-                            //     ),
-                            //     SizedBox(
-                            //       width: 2,
-                            //     ),
-                            //     Text(
-                            //       ":",
-                            //       style: TextStyle(
-                            //         fontFamily: FontFamily.gilroyBold,
-                            //         fontSize: 13,
-                            //         color: greytext,
-                            //       ),
-                            //     ),
-                            //     SizedBox(
-                            //       width: 5,
-                            //     ),
-                            //     SizedBox(
-                            //       width: Get.size.width * 0.7,
-                            //       child: Text(
-                            //         "${myOrderController.nDetailsInfo?.orderProductList.storeAddress}",
-                            //         maxLines: 1,
-                            //         style: TextStyle(
-                            //           fontFamily: FontFamily.gilroyBold,
-                            //           fontSize: 14,
-                            //           color: Colors.grey,
-                            //           overflow: TextOverflow.ellipsis,
-                            //         ),
-                            //       ),
-                            //     )
-                            //   ],
-                            // ),
+                          
 
                             myOrderController.orderInformetionInfo?.orderdata
                                         .couponAmount !=
@@ -678,63 +635,14 @@ class _OrderdetailsScreenState extends State<OrderdetailsScreen> {
                             SizedBox(
                               height: 2,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Payment Method".tr,
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.gilroyBold,
-                                    fontSize: 13,
-                                    color: greytext,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 2,
-                                ),
-                                Text(
-                                  ":",
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.gilroyBold,
-                                    fontSize: 13,
-                                    color: greytext,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                SizedBox(
-                                  width: Get.size.width * 0.45,
-                                  height: 35,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        myOrderController.orderInformetionInfo
+                            OrderInfo(
+                              title: "Payment Method".tr,
+                              subtitle:
+                                  "${ myOrderController.orderInformetionInfo
                                                 ?.orderdata.pMethodName ??
-                                            "",
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.gilroyBold,
-                                          fontSize: 14,
-                                          color: Colors.grey,
-                                        ),
-                                      ),
-                                      Text(
-                                        "(${myOrderController.orderInformetionInfo?.orderdata.orderTransactionId})",
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.gilroyBold,
-                                          fontSize: 14,
-                                          color: Colors.grey,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
+                                            ""}",
                             ),
+                           
                             SizedBox(
                               height: 10,
                             ),
@@ -747,60 +655,18 @@ class _OrderdetailsScreenState extends State<OrderdetailsScreen> {
                               subtitle: myOrderController.orderInformetionInfo
                                   ?.orderdata.deliveryTimeslot,
                             ),
-                            // : SizedBox(),
+           
                             SizedBox(
                               height: 10,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Address".tr,
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.gilroyBold,
-                                    fontSize: 13,
-                                    color: greytext,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 2,
-                                ),
-                                Text(
-                                  ":",
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.gilroyBold,
-                                    fontSize: 13,
-                                    color: greytext,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                SizedBox(
-                                  width: Get.size.width * 0.72,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        myOrderController.orderInformetionInfo
+                            OrderInfo(
+                              title: "Address".tr,
+                              subtitle:
+                                  "${ myOrderController.orderInformetionInfo
                                                 ?.orderdata.customerAddress ??
-                                            "",
-                                        maxLines: 3,
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.gilroyBold,
-                                          fontSize: 14,
-                                          color: Colors.grey,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
+                                            ""}",
                             ),
+                           
                           ],
                         ),
                         decoration: BoxDecoration(
@@ -987,22 +853,19 @@ class _OrderdetailsScreenState extends State<OrderdetailsScreen> {
             color: greytext,
           ),
         ),
-        SizedBox(
-          width: 2,
-        ),
+       
         Text(
-          ":",
+          " : ",
           style: TextStyle(
             fontFamily: FontFamily.gilroyBold,
             fontSize: 13,
             color: greytext,
           ),
         ),
-        SizedBox(
-          width: 5,
-        ),
+       Spacer(),
         Text(
           subtitle ?? "",
+          maxLines: 2,
           style: TextStyle(
             fontFamily: FontFamily.gilroyBold,
             fontSize: 14,

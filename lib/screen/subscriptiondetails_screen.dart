@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last, sized_box_for_whitespace, prefer_typing_uninitialized_variables, prefer_interpolation_to_compose_strings, avoid_print, unused_local_variable, unnecessary_brace_in_string_interps, unnecessary_string_interpolations, non_constant_identifier_names, prefer_const_literals_to_create_immutables, unused_element, unused_field, prefer_final_fields
 
 import 'dart:convert';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:milkmandeliveryboynew/Api/Config.dart';
 import 'package:milkmandeliveryboynew/controller/priscription_controller.dart';
+import 'package:milkmandeliveryboynew/controller/store_product_controller.dart';
 import 'package:milkmandeliveryboynew/helpar/fontfamily_model.dart';
 import 'package:milkmandeliveryboynew/screen/dashboard_screen.dart';
 import 'package:milkmandeliveryboynew/utils/Colors.dart';
@@ -24,12 +26,50 @@ class _MyPriscriptionInfoState extends State<MyPriscriptionInfo> {
   String oID = Get.arguments["oID"];
   GlobalKey<SfSignaturePadState> _signaturePadKey = GlobalKey();
   PreScriptionControllre preScriptionControllre = Get.find();
+  StoreDataContoller storeDataContoller = Get.put(StoreDataContoller(), permanent: false);
+  //StoreProductController storeProductController =Get.put(StoreProductController(), permanent: false);
 
   final note = TextEditingController();
   var selectedRadioTile;
   String? rejectmsg = '';
 
   String imageEncoded = "";
+
+  // new local state for add-product + cart in bottom sheet
+  List<Map<String, dynamic>> _availableProducts = [];
+  List<Map<String, dynamic>> _cartItems = [];
+  int _selectedProductIndex = -1;
+
+  double get _cartSubtotal =>
+      _cartItems.fold(0.0, (sum, it) => sum + (double.parse(it['price1']??"0") * (it['qty'] ?? 1)));
+
+  
+
+  void _addToCart(Map<String, dynamic> product) {
+    final idx = _cartItems.indexWhere((c) => c['id'] == product['id']);
+    if (idx >= 0) {
+      _cartItems[idx]['qty'] = (_cartItems[idx]['qty'] ?? 1) + 1;
+    } else {
+      _cartItems.add({
+        'id': product['id'],
+        'title': product['title'],
+        'price': product['price']??"0",
+        'qty': 1,
+      });
+    }
+  }
+
+  void _changeQty(String id, int delta) {
+    final idx = _cartItems.indexWhere((c) => c['id'] == id);
+    if (idx >= 0) {
+      final newQty = (_cartItems[idx]['qty'] ?? 1) + delta;
+      if (newQty <= 0) {
+        _cartItems.removeAt(idx);
+      } else {
+        _cartItems[idx]['qty'] = newQty;
+      }
+    }
+  }
 
   @override
   void initState() {
@@ -38,6 +78,9 @@ class _MyPriscriptionInfoState extends State<MyPriscriptionInfo> {
       _signaturePadKey.currentState?.clear();
       imageEncoded = "";
     });
+    // initialize available products for add-product + cart bottom sheet
+    storeDataContoller.getStoreData(storeId: storeDataContoller.storeid==""?"2":storeDataContoller.storeid);
+   //storeProductController.fetchStoreProducts();
   }
 
   @override
@@ -64,9 +107,9 @@ class _MyPriscriptionInfoState extends State<MyPriscriptionInfo> {
             "3"
             ? Container(
           color: WhiteColor,
-          height: Get.height * 0.09,
+          height: Get.height * 0.1,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -88,18 +131,18 @@ class _MyPriscriptionInfoState extends State<MyPriscriptionInfo> {
                         ),
                         Image.asset(
                           "assets/downarrow.png",
-                          height: 14,
-                          width: 14,
+                          // height: 14,
+                          // width: 14,
                         )
                       ],
                     ),
-                    SizedBox(height: Get.height * 0.005),
+                    SizedBox(height: Get.height * 0.004),
                     Text(
                       "Total",
                       style: TextStyle(
                         fontFamily: FontFamily.gilroyMedium,
                         color: greyColor,
-                        fontSize: 16,
+                        fontSize: 12,
                       ),
                     ),
                   ],
@@ -154,7 +197,7 @@ class _MyPriscriptionInfoState extends State<MyPriscriptionInfo> {
                           style: TextStyle(
                             fontFamily: FontFamily.gilroyBold,
                             color: BlackColor,
-                            fontSize: 18,
+                            fontSize: 17,
                           ),
                         ),
                         SizedBox(
@@ -167,13 +210,13 @@ class _MyPriscriptionInfoState extends State<MyPriscriptionInfo> {
                         )
                       ],
                     ),
-                    SizedBox(height: Get.height * 0.005),
+                    SizedBox(height: Get.height * 0.004),
                     Text(
                       "Total",
                       style: TextStyle(
                         fontFamily: FontFamily.gilroyMedium,
                         color: greyColor,
-                        fontSize: 16,
+                        fontSize: 14,
                       ),
                     ),
                   ],
@@ -812,7 +855,7 @@ class _MyPriscriptionInfoState extends State<MyPriscriptionInfo> {
                           ?.orderProductList.couponAmount !=
                           "0"
                           ? SizedBox(
-                        height: 13,
+                        height: 1,
                       )
                           : SizedBox(),
                       preScriptionControllre.preDetailsInfo
@@ -833,127 +876,38 @@ class _MyPriscriptionInfoState extends State<MyPriscriptionInfo> {
                         "${currency}${preScriptionControllre.preDetailsInfo?.orderProductList.orderTotal}",
                       ),
                       SizedBox(
-                        height: 2,
+                        height: 13,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Payment Method".tr,
-                            style: TextStyle(
-                              fontFamily: FontFamily.gilroyBold,
-                              fontSize: 13,
-                              color: greytext,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 2,
-                          ),
-                          Text(
-                            ":",
-                            style: TextStyle(
-                              fontFamily: FontFamily.gilroyBold,
-                              fontSize: 13,
-                              color: greytext,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          SizedBox(
-                            width: Get.size.width * 0.45,
-                            height: 35,
-                            child: Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  preScriptionControllre
+
+                      OrderInfo(
+                        title: "Payment Method".tr,
+                        subtitle:
+                        "${  preScriptionControllre
                                       .preDetailsInfo
                                       ?.orderProductList
                                       .pMethodName ??
-                                      "",
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.gilroyBold,
-                                    fontSize: 14,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                Text(
-                                  "(${preScriptionControllre.preDetailsInfo?.orderProductList.orderTransactionId})",
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.gilroyBold,
-                                    fontSize: 14,
-                                    color: Colors.grey,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
+                                      ""}",
                       ),
+                      
                       SizedBox(
-                        height: 10,
+                        height: 13,
                       ),
                       // myOrderController.nDetailsInfo?.orderProductList
                       //             .deliveryTimeslot !=
                       //         "0"
                       //     ?
                       // : SizedBox(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Address".tr,
-                            style: TextStyle(
-                              fontFamily: FontFamily.gilroyBold,
-                              fontSize: 13,
-                              color: greytext,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 2,
-                          ),
-                          Text(
-                            ":",
-                            style: TextStyle(
-                              fontFamily: FontFamily.gilroyBold,
-                              fontSize: 13,
-                              color: greytext,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          SizedBox(
-                            width: Get.size.width * 0.72,
-                            child: Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  preScriptionControllre
+
+                      OrderInfo(
+                        title: "Address".tr,
+                        subtitle:
+                        "${preScriptionControllre
                                       .preDetailsInfo
                                       ?.orderProductList
                                       .customerAddress ??
-                                      "",
-                                  maxLines: 3,
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.gilroyBold,
-                                    fontSize: 14,
-                                    color: Colors.grey,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                                      ""}",
                       ),
+                      
                     ],
                   ),
                   decoration: BoxDecoration(
@@ -1101,115 +1055,462 @@ class _MyPriscriptionInfoState extends State<MyPriscriptionInfo> {
     );
   }
 
-  Future deliveryCompliteSheet({String? id, String? selectDate, productId}) {
+  Future deliveryCompliteSheet({String? id, String? selectDate, productId}) async {
+    _availableProducts = [];
+    // initialize available product list every time sheet opens
+    await storeDataContoller.getStoreData(
+        storeId: storeDataContoller.storeid == "" ? "2" : storeDataContoller.storeid);
+
+    // fetch ALL products from all categories
+   
+
+    if (storeDataContoller.storeDataInfo?.catwiseproduct != null) {
+      for (var category in storeDataContoller.storeDataInfo!.catwiseproduct!) {
+        if (category.productdata != null && category.productdata!.isNotEmpty) {
+          for (var product in category.productdata!) {
+            // extract product info (use first variant or loop all)
+            if (product.productInfo != null && product.productInfo!.isNotEmpty) {
+              final info = product.productInfo![0]; // use first variant
+              _availableProducts.add({
+                'id': product.productId ?? '',
+                'title': product.productTitle ?? '',
+               // 'description': product.productDescription ?? '',
+                'price': info.normalPrice ?? '0',
+             
+                'discount': info.productDiscount ?? '0',
+                'image': (product.productImg ?? '').isNotEmpty
+                    ? (Config.baseUrl + product.productImg!)
+                    : null,
+                'out_of_stock': info.productOutStock == '1',
+              });
+            }
+          }
+        }
+      }
+    }
+
+    _cartItems = [];
+
     return Get.bottomSheet(
-      Container(
-        height: 220,
-        width: Get.size.width,
-        child: Column(
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              "Deliveries".tr,
-              style: TextStyle(
-                fontSize: 20,
-                fontFamily: FontFamily.gilroyBold,
-                color: BlackColor,
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-              ),
-              child: Divider(
-                color: greycolor,
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              "Do you want to deliver the product today?".tr,
-              style: TextStyle(
-                fontFamily: FontFamily.gilroyMedium,
-                fontSize: 16,
-                color: BlackColor,
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: Container(
-                      height: 50,
-                      margin: EdgeInsets.all(15),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "No".tr,
-                        style: TextStyle(
-                          color: gradient.defoultColor,
-                          fontFamily: FontFamily.gilroyBold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                        color: gradient.defoultColor.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(45),
-                      ),
+      isScrollControlled: true,
+      StatefulBuilder(
+        builder: (BuildContext c, StateSetter setState) {
+          final deliveryCharge = double.tryParse(
+                  preScriptionControllre.preDetailsInfo?.orderProductList?.deliveryCharge?.toString() ?? "0") ??
+              0.0;
+          final subtotal = _cartSubtotal;
+          final total = subtotal + deliveryCharge;
+
+          return Container(
+            height:180,//_cartItems.isEmpty?350: 800, // taller to accommodate product picker + cart summary
+            width: Get.size.width,
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    height: 8,
+                    width: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      preScriptionControllre.compliteDeliveries(
-                        orderId: id,
-                        selectDate: selectDate,
-                        productId: productId,
-                      );
-                    },
-                    child: Container(
-                      height: 50,
-                      margin: EdgeInsets.all(15),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Yes".tr,
+                  SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Deliveries".tr,
                         style: TextStyle(
-                          color: WhiteColor,
+                          fontSize: 20,
                           fontFamily: FontFamily.gilroyBold,
-                          fontSize: 16,
+                          color: BlackColor,
                         ),
                       ),
-                      decoration: BoxDecoration(
-                        gradient: gradient.btnGradient,
-                        borderRadius: BorderRadius.circular(45),
-                      ),
+                      Text(
+                        "${selectDate!.split(" ")[0]}  " ,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                        ),
+                      )
+                    ],
+                  ),
+              
+                  SizedBox(height: 10),
+                      /*
+                  Divider(color: greycolor),
+                  SizedBox(height: 8),
+                  Text(
+                    "Add more items from store for today's delivery".tr,
+                    style: TextStyle(
+                      fontFamily: FontFamily.gilroyMedium,
+                      fontSize: 14,
+                      color: BlackColor,
                     ),
                   ),
-                )
-              ],
-            )
-          ],
-        ),
-        decoration: BoxDecoration(
-          color: WhiteColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
-        ),
+                  SizedBox(height: 10),
+
+                  //--- horizontal product picker
+                  if (_availableProducts.isEmpty)
+                    Center(
+                      child: Text("No products available".tr,
+                          style: TextStyle(color: Colors.grey)),
+                    )
+                  else
+                    Container(
+                      height: 120,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: _availableProducts.length,
+                        separatorBuilder: (_, __) => SizedBox(width: 8),
+                        itemBuilder: (_, i) {
+                          final p = _availableProducts[i];
+                          final cartIdx = _cartItems.indexWhere((it) => it['id'] == p['id']);
+                          final qty = cartIdx >= 0 ? (_cartItems[cartIdx]['qty'] ?? 0) : 0;
+
+                          return Container(
+                            width: 140,
+                            decoration: BoxDecoration(
+                              color: WhiteColor,
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                  color: _selectedProductIndex == i
+                                      ? gradient.defoultColor
+                                      : Colors.grey.shade200),
+                            ),
+                            padding: EdgeInsets.all(8),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Row(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(6),
+                                        child: p['image'] != null
+                                            ? FadeInImage.assetNetwork(
+                                                placeholder: 'assets/ezgif.com-crop.gif',
+                                                image: p['image']!,
+                                                width: 50,
+                                                height: 50,
+                                                fit: BoxFit.cover,
+                                              )
+                                            : Image.asset(
+                                                'assets/ezgif.com-crop.gif',
+                                                width: 50,
+                                                height: 50,
+                                              ),
+                                      ),
+                                      SizedBox(width: 8),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              p['title'] ?? '',
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                  fontFamily: FontFamily.gilroyMedium,
+                                                  fontSize: 12),
+                                            ),
+                                            SizedBox(height: 6),
+                                            Text(
+                                              "$currency ${p['price'] ?? '0'}",
+                                              style: TextStyle(
+                                                  fontFamily: FontFamily.gilroyBold,
+                                                  fontSize: 13,
+                                                  color: Colors.grey),
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    qty == 0
+                                        ? Expanded(
+                                            child: OutlinedButton(
+                                              style: OutlinedButton.styleFrom(
+                                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(8)),
+                                              ),
+                                              onPressed: () {
+                                                setState(() {
+                                                  _selectedProductIndex = i;
+                                                  _addToCart(p);
+                                                });
+                                              },
+                                              child: Text(
+                                                "Add",
+                                                style: TextStyle(
+                                                    fontFamily: FontFamily.gilroyBold,
+                                                    color: gradient.defoultColor),
+                                              ),
+                                            ),
+                                          )
+                                        : Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            spacing: 10,
+                                            children: [
+                                              IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    if (_cartItems.any((it) => it['id'] == p['id'])) {
+                                                      _changeQty(p['id']!, -1);
+                                                    }
+                                                  });
+                                                },
+                                                icon: Icon(Icons.remove_circle_outline,
+                                                    color: Colors.grey),
+                                                visualDensity: VisualDensity.compact,
+                                                splashRadius: 18,
+                                              ),
+                                              Text(
+                                                (_cartItems
+                                                            .firstWhere(
+                                                                (it) => it['id'] == p['id'],
+                                                                orElse: () => {'qty': 0})['qty'] ??
+                                                        0)
+                                                    .toString(),
+                                                style: TextStyle(fontSize: 13),
+                                              ),
+                                              IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    _addToCart(p);
+                                                  });
+                                                },
+                                                icon: Icon(Icons.add_circle_outline,
+                                                    color: Colors.grey),
+                                                visualDensity: VisualDensity.compact,
+                                                splashRadius: 18,
+                                              ),
+                                            ],
+                                          )
+                                  ],
+                                )
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  if (_cartItems.isEmpty)
+                    SizedBox()
+                  else
+                    ...[
+                      Divider(
+                        height: 10,
+                        color: greycolor,
+                        thickness: 0.5,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: WhiteColor, borderRadius: BorderRadius.circular(8)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Selected Product ".tr,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontFamily: FontFamily.gilroyMedium,
+                                fontSize: 14,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            SizedBox(
+                              height: 60,
+                              child: ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                separatorBuilder: (context, index) => SizedBox(height: 8),
+                                itemCount: _cartItems.length,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    height: 40,
+                                    width: Get.size.width * 0.4,
+                                    margin: EdgeInsets.only(bottom: 1, right: 4),
+                                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                    decoration: BoxDecoration(
+                                      color: WhiteColor,
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(color: Colors.grey.shade200),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              _cartItems[index]['title']!,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontFamily: FontFamily.gilroyMedium,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                            SizedBox(height: 4),
+                                            Text(
+                                              "$currency${_cartItems[index]['price'] ?? '0'}",
+                                              style: TextStyle(color: Colors.grey, fontSize: 13),
+                                            ),
+                                          ],
+                                        ),
+                                        IconButton(
+                                          tooltip: "Remove product",
+                                          onPressed: () {
+                                            setState(() {
+                                              final removedId = _cartItems[index]['id'];
+                                              _cartItems.removeWhere((it) => it['id'] == removedId);
+                                              _selectedProductIndex = -1;
+                                            });
+                                            showToastMessage("Product removed");
+                                          },
+                                          icon: Icon(Icons.delete_outline, color: Colors.red),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Divider(),
+                            SizedBox(height: 6),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("Subtotal".tr,
+                                    style: TextStyle(color: Colors.grey)),
+                                Text("$currency${subtotal.toStringAsFixed(2)}"),
+                              ],
+                            ),
+                            SizedBox(height: 6),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("Delivery Charge".tr,
+                                    style: TextStyle(color: Colors.grey)),
+                                Text("$currency${deliveryCharge.toStringAsFixed(2)}"),
+                              ],
+                            ),
+                            SizedBox(height: 8),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("Total".tr,
+                                    style: TextStyle(
+                                        fontFamily: FontFamily.gilroyBold, fontSize: 16)),
+                                Text("$currency${total.toStringAsFixed(2)}",
+                                    style: TextStyle(
+                                        fontFamily: FontFamily.gilroyBold, fontSize: 16)),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                    */
+                  Divider(
+                    height: 15,
+                    color: greycolor,
+                    thickness: 0.5,
+                  ),
+                  Text(
+                    "Do you want to deliver the products today?".tr,
+                    style: TextStyle(
+                      fontFamily: FontFamily.gilroyMedium,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w900,
+                      color: BlackColor,
+                    ),
+                  ),
+                  /*
+                  Divider(
+                    height: 12,
+                    color: greycolor,
+                    thickness: 0.5,
+                  ),*/
+                  SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            Get.back();
+                          },
+                          child: Container(
+                            height: 48,
+                            decoration: BoxDecoration(
+                              color: gradient.defoultColor.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(45),
+                            ),
+                            alignment: Alignment.center,
+                            child: Text("No".tr,
+                                style: TextStyle(
+                                    color: gradient.defoultColor,
+                                    fontFamily: FontFamily.gilroyBold,
+                                    fontSize: 16)),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 12),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            preScriptionControllre.compliteDeliveries(
+                              orderId: id,
+                              selectDate: selectDate,
+                              productId: productId,
+                             // extras: _cartItems,
+                            );
+                            Get.back();
+                            showToastMessage(
+                                "Delivery confirmed. Added items: ${_cartItems.length}");
+                          },
+                          child: Container(
+                            height: 48,
+                            decoration: BoxDecoration(
+                              gradient: gradient.btnGradient,
+                              borderRadius: BorderRadius.circular(45),
+                            ),
+                            alignment: Alignment.center,
+                            child: Text("Yes".tr,
+                                style: TextStyle(
+                                    color: WhiteColor,
+                                    fontFamily: FontFamily.gilroyBold,
+                                    fontSize: 16)),
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+            decoration: BoxDecoration(
+              color: WhiteColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+            ),
+          );
+        },
       ),
+      backgroundColor: Colors.transparent,
     );
   }
 
@@ -1486,22 +1787,21 @@ class _MyPriscriptionInfoState extends State<MyPriscriptionInfo> {
             color: greytext,
           ),
         ),
-        SizedBox(
-          width: 2,
-        ),
+       
         Text(
-          ":",
+          " : ",
           style: TextStyle(
             fontFamily: FontFamily.gilroyBold,
             fontSize: 13,
             color: greytext,
           ),
         ),
-        SizedBox(
-          width: 5,
-        ),
+      Spacer(),
         Text(
           subtitle ?? "",
+          maxLines: 2,
+          textAlign: TextAlign.right,
+          overflow: TextOverflow.clip,
           style: TextStyle(
             fontFamily: FontFamily.gilroyBold,
             fontSize: 14,
