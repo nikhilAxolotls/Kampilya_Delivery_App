@@ -26,151 +26,167 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () {
-          Get.to(() => const BottoBarScreen());
-          return Future.value(false);
-        },
-        child: Scaffold(
-          backgroundColor: WhiteColor,
-          appBar: AppBar(
-            centerTitle: true,
-            elevation: 0,
-            leading: SizedBox(),
-            backgroundColor: transparent,
-            title: Text(
-              "Profile",
-              style: TextStyle(
-                fontFamily: FontFamily.gilroyBold,
-                fontSize: 16,
-                color: BlackColor,
-              ),
+      onWillPop: () {
+        Get.to(() => const BottoBarScreen());
+        return Future.value(false);
+      },
+      child: Scaffold(
+        backgroundColor: WhiteColor,
+        appBar: AppBar(
+          centerTitle: true,
+          elevation: 0,
+          leading: SizedBox(),
+          backgroundColor: transparent,
+          title: Text(
+            "Profile",
+            style: TextStyle(
+              fontFamily: FontFamily.gilroyBold,
+              fontSize: 16,
+              color: BlackColor,
             ),
           ),
-          body: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        ),
+        body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Stack(
                   children: [
-                    Stack(
-                      children: [
-                        SizedBox(
-                          height: 130,
-                          width: 130,
-                          child: CircleAvatar(
-                            backgroundColor: WhiteColor,
-                            child: CircleAvatar(
-                              radius: 60,
-                              backgroundColor: WhiteColor,
-                              backgroundImage: NetworkImage(
-                                Config.imageurl +
-                                    getData.read("StoreLogin")["img"],
-                              ),
-                            ),
+                    SizedBox(
+                      height: 130,
+                      width: 130,
+                      child: CircleAvatar(
+                        backgroundColor: WhiteColor,
+                        child: CircleAvatar(
+                          radius: 60,
+                          backgroundColor: WhiteColor,
+                          backgroundImage: NetworkImage(
+                            Config.imageurl + getData.read("StoreLogin")["img"],
                           ),
                         ),
-                        Positioned(
-                          bottom: 10,
-                          right: 0,
-                          child: Container(
-                              height: 45,
-                              width: 45,
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  gradient: gradient.btnGradient),
-                              child: Image.asset("assets/Vector.png",
-                                  color: WhiteColor)),
-                        )
-                      ],
+                      ),
                     ),
-                    SizedBox(height: Get.height * 0.02),
-                    Text(getData.read("StoreLogin")["title"],
-                        style: TextStyle(
-                            fontFamily: FontFamily.gilroyBold,
-                            color: BlackColor,
-                            fontSize: 20)),
-                    SizedBox(height: Get.height * 0.005),
-                    // Text(getData.read("StoreLogin")["slogan"],
-                    //     style: TextStyle(
-                    //         fontFamily: FontFamily.gilroyMedium,
-                    //         color: greyColor,
-                    //         fontSize: 16)),
-                    // SizedBox(height: Get.height * 0.005),
-                    Text(getData.read("StoreLogin")["email"],
-                        style: TextStyle(
-                            fontFamily: FontFamily.gilroyMedium,
-                            color: greyColor,
-                            fontSize: 16)),
-                    SizedBox(height: Get.height * 0.03),
-                    setting(
-                      SettingName: "Notification",
-                      image: "assets/Notification.png",
-                      onTap: () {
-                        Get.to(() => NotificationScreen());
-                      },
+                    Positioned(
+                      bottom: 10,
+                      right: 0,
+                      child: Container(
+                        height: 45,
+                        width: 45,
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: gradient.btnGradient,
+                        ),
+                        child: Image.asset(
+                          "assets/Vector.png",
+                          color: WhiteColor,
+                        ),
+                      ),
                     ),
-                    // SizedBox(height: Get.height * 0.02),
-                    GetBuilder<PageListController>(builder: (context) {
-                      return pageListController.isLodding
-                          ? ListView.builder(
-                              itemCount: pageListController
-                                  .dynamicPageData?.pagelist.length,
-                              shrinkWrap: true,
-                              itemExtent: 70,
-                              physics: const NeverScrollableScrollPhysics(),
-                              padding: EdgeInsets.zero,
-                              itemBuilder: (context, index) {
-                                return InkWell(
-                                  child: Column(
-                                    children: [
-                                      setting(
-                                        SettingName: pageListController
-                                            .dynamicPageData
-                                            ?.pagelist[index]
-                                            .title,
-                                        image: "assets/file.png",
-                                        onTap: () {
-                                          Get.to(() => Loream(
-                                              title: pageListController
-                                                  .dynamicPageData
-                                                  ?.pagelist[index]
-                                                  .title,
-                                              discription: pageListController
-                                                  .dynamicPageData
-                                                  ?.pagelist[index]
-                                                  .description));
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            )
-                          : Center(
-                              child: CircularProgressIndicator(),
-                            );
-                    }),
+                  ],
+                ),
+                SizedBox(height: Get.height * 0.02),
+                Text(
+                  getData.read("StoreLogin")["title"],
+                  style: TextStyle(
+                    fontFamily: FontFamily.gilroyBold,
+                    color: BlackColor,
+                    fontSize: 20,
+                  ),
+                ),
+                SizedBox(height: Get.height * 0.005),
+                // Text(getData.read("StoreLogin")["slogan"],
+                //     style: TextStyle(
+                //         fontFamily: FontFamily.gilroyMedium,
+                //         color: greyColor,
+                //         fontSize: 16)),
+                // SizedBox(height: Get.height * 0.005),
+                Text(
+                  getData.read("StoreLogin")["email"],
+                  style: TextStyle(
+                    fontFamily: FontFamily.gilroyMedium,
+                    color: greyColor,
+                    fontSize: 16,
+                  ),
+                ),
+                SizedBox(height: Get.height * 0.03),
+                setting(
+                  SettingName: "Notification",
+                  image: "assets/Notification.png",
+                  onTap: () {
+                    Get.to(() => NotificationScreen());
+                  },
+                ),
+                // SizedBox(height: Get.height * 0.02),
+                GetBuilder<PageListController>(
+                  builder: (context) {
+                    return pageListController.isLodding
+                        ? ListView.builder(
+                            itemCount: pageListController
+                                .dynamicPageData
+                                ?.pagelist
+                                .length,
+                            shrinkWrap: true,
+                            itemExtent: 70,
+                            physics: const NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.zero,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                child: Column(
+                                  children: [
+                                    setting(
+                                      SettingName: pageListController
+                                          .dynamicPageData
+                                          ?.pagelist[index]
+                                          .title,
+                                      image: "assets/file.png",
+                                      onTap: () {
+                                        Get.to(
+                                          () => Loream(
+                                            title: pageListController
+                                                .dynamicPageData
+                                                ?.pagelist[index]
+                                                .title,
+                                            discription: pageListController
+                                                .dynamicPageData
+                                                ?.pagelist[index]
+                                                .description,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          )
+                        : Center(child: CircularProgressIndicator());
+                  },
+                ),
 
-                    setting(
-                      SettingName: "Delete Account",
-                      image: "assets/trash.png",
-                      onTap: () {
-                        deleteSheet();
-                      },
-                    ),
-                    setting(
-                      SettingName: "Logout",
-                      image: "assets/logout.png",
-                      onTap: () {
-                        logoutSheet();
-                      },
-                    )
-                  ]),
+                setting(
+                  SettingName: "Delete Account",
+                  image: "assets/trash.png",
+                  onTap: () {
+                    deleteSheet();
+                  },
+                ),
+                setting(
+                  SettingName: "Logout",
+                  image: "assets/logout.png",
+                  onTap: () {
+                    logoutSheet();
+                  },
+                ),
+              ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   setting({String? image, SettingName, Function()? onTap}) {
@@ -181,23 +197,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Container(
             height: 50,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12), color: bgcolor),
+              borderRadius: BorderRadius.circular(12),
+              color: bgcolor,
+            ),
             padding: EdgeInsets.symmetric(horizontal: 12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    Image.asset(image!,
-                        height: 25, color: gradient.defoultColor),
+                    Image.asset(
+                      image!,
+                      height: 25,
+                      color: gradient.defoultColor,
+                    ),
                     SizedBox(width: Get.width * 0.03),
                     Text(
                       SettingName,
                       style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: "Gilroy Bold",
-                          color: BlackColor),
-                    )
+                        fontSize: 16,
+                        fontFamily: "Gilroy Bold",
+                        color: BlackColor,
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(width: Get.width * 0.025),
@@ -205,8 +227,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   onTap: () {
                     // Get.to(() => const EditProfile());
                   },
-                  child: Icon(Icons.keyboard_arrow_right_outlined,
-                      color: BlackColor, size: 30),
+                  child: Icon(
+                    Icons.keyboard_arrow_right_outlined,
+                    color: BlackColor,
+                    size: 30,
+                  ),
                 ),
               ],
             ),
@@ -231,9 +256,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         child: Column(
           children: [
-            SizedBox(
-              height: 20,
-            ),
+            SizedBox(height: 20),
             Text(
               "Delete Account".tr,
               style: TextStyle(
@@ -242,20 +265,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: gradient.defoultColor,
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
+            SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-              ),
-              child: Divider(
-                color: greycolor,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Divider(color: greycolor),
             ),
-            SizedBox(
-              height: 10,
-            ),
+            SizedBox(height: 10),
             Text(
               "Are you sure you want to delete account?".tr,
               style: TextStyle(
@@ -264,9 +279,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: BlackColor,
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
+            SizedBox(height: 10),
             Row(
               children: [
                 Expanded(
@@ -317,9 +330,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                   ),
-                )
+                ),
               ],
-            )
+            ),
           ],
         ),
       ),
@@ -344,9 +357,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Text(
               "Logout".tr,
               style: TextStyle(
-                  fontSize: 20,
-                  fontFamily: FontFamily.gilroyBold,
-                  color: RedColor),
+                fontSize: 20,
+                fontFamily: FontFamily.gilroyBold,
+                color: RedColor,
+              ),
             ),
             SizedBox(height: 20),
             Padding(
@@ -357,9 +371,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Text(
               "Are you sure you want to log out?".tr,
               style: TextStyle(
-                  fontFamily: FontFamily.gilroyMedium,
-                  fontSize: 16,
-                  color: BlackColor),
+                fontFamily: FontFamily.gilroyMedium,
+                fontSize: 16,
+                color: BlackColor,
+              ),
             ),
             SizedBox(height: 10),
             Row(
@@ -376,9 +391,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Text(
                         "Cancle".tr,
                         style: TextStyle(
-                            color: gradient.defoultColor,
-                            fontFamily: FontFamily.gilroyBold,
-                            fontSize: 16),
+                          color: gradient.defoultColor,
+                          fontFamily: FontFamily.gilroyBold,
+                          fontSize: 16,
+                        ),
                       ),
                       decoration: BoxDecoration(
                         color: greenColor.withOpacity(0.1),
@@ -395,9 +411,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         getData.remove('Remember');
                         getData.remove("StoreLogin");
                         Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Loginscreen()));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Loginscreen(),
+                          ),
+                        );
                       });
                     },
                     child: Container(
@@ -407,18 +425,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Text(
                         "Yes, Logout".tr,
                         style: TextStyle(
-                            color: WhiteColor,
-                            fontFamily: FontFamily.gilroyBold,
-                            fontSize: 16),
+                          color: WhiteColor,
+                          fontFamily: FontFamily.gilroyBold,
+                          fontSize: 16,
+                        ),
                       ),
                       decoration: BoxDecoration(
-                          gradient: gradient.btnGradient,
-                          borderRadius: BorderRadius.circular(45)),
+                        gradient: gradient.btnGradient,
+                        borderRadius: BorderRadius.circular(45),
+                      ),
                     ),
                   ),
-                )
+                ),
               ],
-            )
+            ),
           ],
         ),
       ),

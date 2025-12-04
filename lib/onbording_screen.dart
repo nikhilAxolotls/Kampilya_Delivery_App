@@ -305,27 +305,27 @@ class _onbordingState extends State<onbording> {
   @override
   void initState() {
     super.initState();
-    
+
     // Fetch location first, then navigate after delay
     getCurrentLatAndLong().then((_) {
       Timer(
-        const Duration(seconds:2),
+        const Duration(seconds: 2),
         () => getData.read("Firstuser") != true
             ? Get.to(() => BoardingPage())
             : getData.read("Remember") != true
-                ? Get.to(() => const Loginscreen())
-                : Get.to(() => BottoBarScreen()),
+            ? Get.to(() => const Loginscreen())
+            : Get.to(() => BottoBarScreen()),
       );
     });
   }
 
-// location Cordinates
- Future<Position> locateUser() async {
+  // location Cordinates
+  Future<Position> locateUser() async {
     return Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
     );
   }
-  
+
   getCurrentLatAndLong() async {
     try {
       LocationPermission permission = await Geolocator.checkPermission();
@@ -382,7 +382,6 @@ class _onbordingState extends State<onbording> {
       print("Location error: $e");
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -511,7 +510,7 @@ class _BoardingScreenState extends State<BoardingPage> {
   sliderText() {
     return Column(
       children: [
-        SizedBox(height: Get.height * 0.05),
+        SizedBox(height: Get.height * 0.04),
         SizedBox(
           width: Get.width * 0.70,
           child: Text(
@@ -530,7 +529,7 @@ class _BoardingScreenState extends State<BoardingPage> {
             ), //heding Text
           ),
         ),
-        SizedBox(height: Get.height * 0.02),
+        SizedBox(height: Get.height * 0.015),
         SizedBox(
           width: Get.width * 0.70,
           child: Text(
@@ -608,7 +607,7 @@ class _BoardingScreenState extends State<BoardingPage> {
             right: 0,
             bottom: 0,
             child: Container(
-              height: Get.size.height * 0.35,
+              height: Get.size.height * 0.36,
               width: Get.size.width,
               margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -617,7 +616,7 @@ class _BoardingScreenState extends State<BoardingPage> {
               ),
               child: Column(
                 children: <Widget>[
-                  SizedBox(height: Get.size.height * 0.03),
+                  SizedBox(height: Get.size.height * 0.015),
                   _buildPageIndicator(),
                   sliderText(),
                   Spacer(),
