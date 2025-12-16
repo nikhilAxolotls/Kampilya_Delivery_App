@@ -51,7 +51,7 @@ class _LoginscreenState extends State<Loginscreen> {
               Stack(
                 children: [
                   Container(
-                    height: Get.height * 0.4,
+                    height: Get.height * 0.45,
                     width: double.infinity,
                     decoration: BoxDecoration(gradient: gradient.btnGradient),
                     padding: EdgeInsets.symmetric(horizontal: 15),
@@ -59,9 +59,7 @@ class _LoginscreenState extends State<Loginscreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          height: Get.height * 0.13,
-                        ),
+                        SizedBox(height: Get.height * 0.13),
                         Text(
                           "Welcome Back".tr,
                           style: TextStyle(
@@ -71,9 +69,7 @@ class _LoginscreenState extends State<Loginscreen> {
                             letterSpacing: 1.1,
                           ),
                         ),
-                        SizedBox(
-                          height: Get.height * 0.01,
-                        ),
+                        SizedBox(height: Get.height * 0.005),
                         Text(
                           "Sign in to start".tr,
                           style: TextStyle(
@@ -82,22 +78,23 @@ class _LoginscreenState extends State<Loginscreen> {
                             fontSize: 15,
                           ),
                         ),
+                        SizedBox(height: Get.height * 0.04),
                       ],
                     ),
                   ),
-                  Positioned(
-                    top: 10,
-                    right: 0,
-                    child: SizedBox(
-                      height: Get.size.height * 0.23,
-                      width: Get.size.width * 0.7,
-                      child: Image.asset(
-                        "assets/loginImage.png",
-                        height: Get.size.height * 0.2,
-                        width: Get.size.width * 0.6,
-                      ),
-                    ),
-                  )
+                  // Positioned(
+                  //   top: 10,
+                  //   right: 0,
+                  //   child: SizedBox(
+                  //     height: Get.size.height * 0.23,
+                  //     width: Get.size.width * 0.7,
+                  //     child: Image.asset(
+                  //       "assets/loginImage.png",
+                  //       height: Get.size.height * 0.2,
+                  //       width: Get.size.width * 0.6,
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
               Positioned(
@@ -110,9 +107,11 @@ class _LoginscreenState extends State<Loginscreen> {
                     height: Get.height,
                     width: Get.width * 0.9,
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                    margin: EdgeInsets.symmetric(horizontal: 16),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: WhiteColor),
+                      borderRadius: BorderRadius.circular(20),
+                      color: WhiteColor,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -165,10 +164,7 @@ class _LoginscreenState extends State<Loginscreen> {
                                 _toggle();
                               },
                               child: !_obscureText
-                                  ? Icon(
-                                      Icons.visibility,
-                                      color: greyColor,
-                                    )
+                                  ? Icon(Icons.visibility, color: greyColor)
                                   : Icon(
                                       Icons.visibility_off,
                                       color: greycolor,
@@ -183,10 +179,12 @@ class _LoginscreenState extends State<Loginscreen> {
                               children: [
                                 Theme(
                                   data: ThemeData(
-                                      unselectedWidgetColor: greycolor),
+                                    unselectedWidgetColor: greycolor,
+                                  ),
                                   child: Checkbox(
                                     shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(4)),
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
                                     value: isChecked,
                                     activeColor: BlackColor,
                                     checkColor: WhiteColor,
@@ -198,15 +196,14 @@ class _LoginscreenState extends State<Loginscreen> {
                                     },
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 8,
-                                ),
+                                SizedBox(width: 8),
                                 Text(
                                   "Remember Me",
                                   style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: "Gilroy Medium",
-                                      color: BlackColor),
+                                    fontSize: 16,
+                                    fontFamily: "Gilroy Medium",
+                                    color: BlackColor,
+                                  ),
                                 ),
                               ],
                             ),
@@ -228,7 +225,7 @@ class _LoginscreenState extends State<Loginscreen> {
                           onclick: () {
                             if (_formKey.currentState?.validate() ?? false) {
                               login(Email.text, password.text);
-                            
+
                               save("Remember", isChecked);
                               initPlatformState();
                             }
@@ -246,13 +243,14 @@ class _LoginscreenState extends State<Loginscreen> {
     );
   }
 
-  Widget passwordtextfield(
-      {Widget? suffixIcon,
-      String? lebaltext,
-      double? width,
-      bool? obscureText,
-      String? Function(String?)? validator,
-      TextEditingController? controller}) {
+  Widget passwordtextfield({
+    Widget? suffixIcon,
+    String? lebaltext,
+    double? width,
+    bool? obscureText,
+    String? Function(String?)? validator,
+    TextEditingController? controller,
+  }) {
     return Container(
       width: width,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
@@ -276,12 +274,12 @@ class _LoginscreenState extends State<Loginscreen> {
             borderRadius: BorderRadius.circular(15),
           ),
           border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15))),
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+          ),
           enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: greyColor.withOpacity(0.5),
-              ),
-              borderRadius: BorderRadius.circular(15)),
+            borderSide: BorderSide(color: greyColor.withOpacity(0.5)),
+            borderRadius: BorderRadius.circular(15),
+          ),
         ),
       ),
     );
@@ -303,7 +301,10 @@ class _LoginscreenState extends State<Loginscreen> {
         if (loginpage == "true") {
           Get.offAll(() => BottoBarScreen());
           // OneSignal.shared.sendTag("rider_id", getData.read("StoreLogin")["id"]);
-          OneSignal.User.addTagWithKey("rider_id", getData.read("StoreLogin")["id"]);
+          OneSignal.User.addTagWithKey(
+            "rider_id",
+            getData.read("StoreLogin")["id"],
+          );
           showToastMessage(result["ResponseMsg"]);
         } else {
           showToastMessage(result["ResponseMsg"]);
@@ -331,7 +332,6 @@ class _LoginscreenState extends State<Loginscreen> {
     OneSignal.initialize(Config.oneSignel);
     OneSignal.Notifications.requestPermission(true).then((value) {
       print("Signal value:- $value");
-    },);
+    });
   }
 }
-

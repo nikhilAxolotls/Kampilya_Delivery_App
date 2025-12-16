@@ -85,141 +85,144 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               ),
             ),
           ),
-          SizedBox(width: Get.width * 0.025),
-          InkWell(
-            onTap: () {
-              setState(() {
-                getData.remove('Firstuser');
-                getData.remove('Remember');
-                getData.remove("StoreLogin");
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => Loginscreen()));
-              });
-            },
-            child: Container(
-              height: 50,
-              width: 50,
-              padding: EdgeInsets.all(14),
-              decoration: BoxDecoration(shape: BoxShape.circle, color: bgcolor),
-              child: Image.asset(
-                "assets/log-out.png",
-                color: gradient.defoultColor,
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 10,
-          )
+          // SizedBox(width: Get.width * 0.025),
+          // InkWell(
+          //   onTap: () {
+          //     setState(() {
+
+          //       getData.remove('Firstuser');
+          //       getData.remove('Remember');
+          //       getData.remove("StoreLogin");
+          //       Navigator.pushReplacement(
+          //         context,
+          //         MaterialPageRoute(builder: (context) => Loginscreen()),
+          //       );
+          //     });
+          //   },
+          //   child: Container(
+          //     height: 50,
+          //     width: 50,
+          //     padding: EdgeInsets.all(14),
+          //     decoration: BoxDecoration(shape: BoxShape.circle, color: bgcolor),
+          //     child: Image.asset(
+          //       "assets/log-out.png",
+          //       color: gradient.defoultColor,
+          //     ),
+          //   ),
+          // ),
+          SizedBox(width: 10),
         ],
       ),
       body: RefreshIndicator(
         onRefresh: () {
-          return Future.delayed(
-            Duration(seconds: 2),
-            () {
-              dashboardController.getDashboardData(
-                riderID: getData.read("StoreLogin")["id"],
-              );
-            },
-          );
+          return Future.delayed(Duration(seconds: 2), () {
+            dashboardController.getDashboardData(
+              riderID: getData.read("StoreLogin")["id"],
+            );
+          });
         },
         child: SizedBox(
           height: Get.size.height,
           width: Get.size.width,
-          child: GetBuilder<DashboardController>(builder: (context) {
-            return dashboardController.isLoading
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(
-                      children: [
-                        SizedBox(height: Get.height * 0.02),
-                        GridView.builder(
-                          itemCount: dashboardController
-                              .dashboardInfo?.reportData.length,
-                          shrinkWrap: true,
-                          padding: EdgeInsets.zero,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 8,
-                            crossAxisSpacing: 8,
-                            mainAxisExtent: 130,
-                          ),
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () {
-                                if (index == 0) {
-                                  Get.toNamed(Routes.myBookingScreen);
-                                } else if (index == 2) {
-                                  Get.toNamed(Routes.myPriscriptionOrder);
-                                }
-                              },
-                              child: Container(
-                                child: Row(
-                                  children: [
-                                    SizedBox(width: 15),
-                                    SizedBox(
-                                      width: Get.width * 0.37,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          SizedBox(
-                                            height: 15,
-                                          ),
-                                          Text(
-                                            dashboardController
-                                                    .dashboardInfo
-                                                    ?.reportData[index]
-                                                    .reportData
-                                                    .toString() ??
-                                                "",
-                                            maxLines: 1,
-                                            style: TextStyle(
-                                              color: WhiteColor,
-                                              fontFamily: FontFamily.gilroyBold,
-                                              fontSize: 20,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          Text(
-                                            dashboardController.dashboardInfo
-                                                    ?.reportData[index].title ??
-                                                "",
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 2,
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              color: WhiteColor,
-                                              fontFamily:
-                                                  FontFamily.gilroyExtraBold,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
+          child: GetBuilder<DashboardController>(
+            builder: (context) {
+              return dashboardController.isLoading
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Column(
+                        children: [
+                          SizedBox(height: Get.height * 0.02),
+                          GridView.builder(
+                            itemCount: dashboardController
+                                .dashboardInfo
+                                ?.reportData
+                                .length,
+                            shrinkWrap: true,
+                            padding: EdgeInsets.zero,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 8,
+                                  crossAxisSpacing: 8,
+                                  mainAxisExtent: 130,
                                 ),
-                                decoration: BoxDecoration(
-                                  color: WhiteColor,
-                                  // border: Border.all(color: ),
-                                  borderRadius: BorderRadius.circular(15),
-                                  image: DecorationImage(
-                                    image: AssetImage("assets/dImage.png"),
-                                    fit: BoxFit.cover,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  if (index == 0) {
+                                    Get.toNamed(Routes.myBookingScreen);
+                                  } else if (index == 2) {
+                                    //---------------------update(Routes) --------------------//
+                                    // Get.toNamed(Routes.myPriscriptionOrder);
+                                    Get.toNamed(Routes.totalRoutes);
+                                  }
+                                },
+                                child: Container(
+                                  child: Row(
+                                    children: [
+                                      SizedBox(width: 15),
+                                      SizedBox(
+                                        width: Get.width * 0.37,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(height: 15),
+                                            Text(
+                                              dashboardController
+                                                      .dashboardInfo
+                                                      ?.reportData[index]
+                                                      .reportData
+                                                      .toString() ??
+                                                  "",
+                                              maxLines: 1,
+                                              style: TextStyle(
+                                                color: WhiteColor,
+                                                fontFamily:
+                                                    FontFamily.gilroyBold,
+                                                fontSize: 20,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            Text(
+                                              dashboardController
+                                                      .dashboardInfo
+                                                      ?.reportData[index]
+                                                      .title ??
+                                                  "",
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 2,
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                color: WhiteColor,
+                                                fontFamily:
+                                                    FontFamily.gilroyExtraBold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: WhiteColor,
+                                    // border: Border.all(color: ),
+                                    borderRadius: BorderRadius.circular(15),
+                                    image: DecorationImage(
+                                      image: AssetImage("assets/dImage.png"),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
-                        )
-                      ],
-                    ),
-                  )
-                : Center(
-                    child: CircularProgressIndicator(),
-                  );
-          }),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    )
+                  : Center(child: CircularProgressIndicator());
+            },
+          ),
         ),
       ),
     );

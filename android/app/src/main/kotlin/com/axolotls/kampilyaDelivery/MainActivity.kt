@@ -1,4 +1,4 @@
-package com.axolotls.delivery
+package com.axolotls.kampilyaDelivery
 
 import io.flutter.embedding.android.FlutterActivity
 

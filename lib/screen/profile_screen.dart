@@ -2,6 +2,7 @@
 
 import 'package:milkmandeliveryboynew/Api/Config.dart';
 import 'package:milkmandeliveryboynew/Api/data_store.dart';
+import 'package:milkmandeliveryboynew/controller/notificatio_controller.dart';
 import 'package:milkmandeliveryboynew/controller/pagelist_controller.dart';
 import 'package:milkmandeliveryboynew/helpar/fontfamily_model.dart';
 import 'package:milkmandeliveryboynew/screen/bottombar_screen.dart';
@@ -20,6 +21,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  NotificationController notificationController = Get.find();
   String? text;
   bool isLodding = false;
   PageListController pageListController = Get.find();
@@ -117,6 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   SettingName: "Notification",
                   image: "assets/Notification.png",
                   onTap: () {
+                    notificationController.getNotificationData();
                     Get.to(() => NotificationScreen());
                   },
                 ),

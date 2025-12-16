@@ -1,7 +1,6 @@
 // ignore_for_file: file_names, prefer_interpolation_to_compose_strings
 
 class Config {
-
   static const String oneSignel = "*****************";
   // static const String baseUrl = 'https://milkyway.cscodetech.cloud/';
   static const String baseUrl = 'https://admin.kampilya.com/';
@@ -40,4 +39,6 @@ class Config {
 
   //--------------- User Profile ----------------//
   static const String userStoreDataApi = "u_store_data.php";
+  //--------------- Route ----------------//
+  static const String routeApi = "get_rider_routes.php";
 }

@@ -467,7 +467,7 @@ class _BoardingScreenState extends State<BoardingPage> {
             alignment: Alignment.center,
             margin: EdgeInsets.only(top: Get.size.height * 0.1),
             padding: EdgeInsets.all(10),
-            child: Image.asset(slide.image, fit: BoxFit.cover),
+            // child: Image.asset(slide.image, fit: BoxFit.cover),
             // decoration: BoxDecoration(
             //     image: DecorationImage(
             //         image: AssetImage(slide.image), fit: BoxFit.cover)),

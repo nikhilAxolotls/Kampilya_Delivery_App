@@ -33,10 +33,7 @@ class PreScriptionControllre extends GetxController implements GetxService {
         "status": statusWise,
       };
       Uri uri = Uri.parse(Config.path + Config.subScriptionHistory);
-      var response = await http.post(
-        uri,
-        body: jsonEncode(map),
-      );
+      var response = await http.post(uri, body: jsonEncode(map));
       print(":::::::++++++" + response.body.toString());
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
@@ -56,30 +53,34 @@ class PreScriptionControllre extends GetxController implements GetxService {
       isLoading = false;
       isComplite = "0";
       update();
-      Map map = {
-        "rider_id": getData.read("StoreLogin")["id"],
-        "order_id": oID,
-      };
+      Map map = {"rider_id": getData.read("StoreLogin")["id"], "order_id": oID};
       Uri uri = Uri.parse(Config.path + Config.subScriptionInformetion);
-      var response = await http.post(
-        uri,
-        body: jsonEncode(map),
-      );
+      var response = await http.post(uri, body: jsonEncode(map));
       print("!!!!!!!!!!!!!!" + response.body.toString());
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
         print("!!!!!!!!!!!!!!" + result.toString());
         preDetailsInfo = PreDetailsInfo.fromJson(result);
-        for (var i = 0;
-            i < preDetailsInfo!.orderProductList.orderProductData.length;
-            i++) {
-          for (var j = 0;
-              j <
-                  preDetailsInfo!
-                      .orderProductList.orderProductData[i].totaldates.length;
-              j++) {
-            if (preDetailsInfo!.orderProductList.orderProductData[i]
-                    .totaldates[j].isComplete !=
+        for (
+          var i = 0;
+          i < preDetailsInfo!.orderProductList.orderProductData.length;
+          i++
+        ) {
+          for (
+            var j = 0;
+            j <
+                preDetailsInfo!
+                    .orderProductList
+                    .orderProductData[i]
+                    .totaldates
+                    .length;
+            j++
+          ) {
+            if (preDetailsInfo!
+                    .orderProductList
+                    .orderProductData[i]
+                    .totaldates[j]
+                    .isComplete !=
                 true) {
               isComplite = "1";
             }
@@ -95,17 +96,10 @@ class PreScriptionControllre extends GetxController implements GetxService {
 
   mackDecisionApi({String? orderID, status, reson}) async {
     try {
-      Map map = {
-        "oid": orderID,
-        "status": status,
-        "comment_reject": reson,
-      };
+      Map map = {"oid": orderID, "status": status, "comment_reject": reson};
       print(":::::::::????????" + map.toString());
       Uri uri = Uri.parse(Config.path + Config.preDecision);
-      var response = await http.post(
-        uri,
-        body: jsonEncode(map),
-      );
+      var response = await http.post(uri, body: jsonEncode(map));
       print(":::::::::????????" + response.body);
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
@@ -134,10 +128,7 @@ class PreScriptionControllre extends GetxController implements GetxService {
       };
       print("=====-------->>" + map.toString());
       Uri uri = Uri.parse(Config.path + Config.preCompleteOrder);
-      var response = await http.post(
-        uri,
-        body: jsonEncode(map),
-      );
+      var response = await http.post(uri, body: jsonEncode(map));
       print("=====-------->>" + response.body.toString());
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
@@ -150,22 +141,25 @@ class PreScriptionControllre extends GetxController implements GetxService {
     }
   }
 
-  compliteDeliveries({String? orderId, selectDate, productId}) async {
+  compliteDeliveries({
+    String? orderId,
+    selectDate,
+    productId,
+    String? quantity,
+  }) async {
     try {
       isLoading = false;
       Map map = {
         "order_id": orderId,
         "select_date": selectDate.toString().split(" ").first,
         "product_id": productId,
+        "product_quantity": quantity,
       };
-// order_id
-// select_date
+      // order_id
+      // select_date
       print("-----========>>" + map.toString());
       Uri uri = Uri.parse(Config.path + Config.conpleteDeliveries);
-      var response = await http.post(
-        uri,
-        body: jsonEncode(map),
-      );
+      var response = await http.post(uri, body: jsonEncode(map));
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
         print(result.toString());

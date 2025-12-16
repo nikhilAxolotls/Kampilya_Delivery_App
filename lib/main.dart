@@ -15,6 +15,7 @@ Future<void> main() async {
   await di.init();
   runApp(
     GetMaterialApp(
+      title: "Kampilya Delivery",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: false,
