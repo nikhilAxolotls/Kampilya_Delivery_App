@@ -31,10 +31,7 @@ class _LoreamState extends State<Loream> {
           onPressed: () {
             Get.back();
           },
-          icon: Icon(
-            Icons.arrow_back,
-            color: BlackColor,
-          ),
+          icon: Icon(Icons.arrow_back, color: BlackColor),
         ),
         title: Text(
           widget.title ?? "",
@@ -46,34 +43,43 @@ class _LoreamState extends State<Loream> {
           ),
         ),
       ),
-      body: SizedBox(
-        height: Get.size.height,
-        width: Get.size.width,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: Get.height / 30),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: Get.size.width / 20),
-                child: Column(children: [
-                  (widget.discription != null && widget.discription!.isNotEmpty)
-                      ? HtmlWidget(
-                          widget.discription ?? "",
-                          textStyle: TextStyle(
-                              color: BlackColor,
-                              fontSize: Get.height / 50,
-                              fontFamily: 'Gilroy Normal'),
-                        )
-                      : Text(
-                          "",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: Get.height / 50,
-                              fontFamily: 'Gilroy Normal'),
-                        ),
-                ]),
-              ),
-            ],
+      body: SafeArea(
+        child: SizedBox(
+          height: Get.size.height,
+          width: Get.size.width,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: Get.height / 30),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Get.size.width / 20,
+                  ),
+                  child: Column(
+                    children: [
+                      (widget.discription != null &&
+                              widget.discription!.isNotEmpty)
+                          ? HtmlWidget(
+                              widget.discription ?? "",
+                              textStyle: TextStyle(
+                                color: BlackColor,
+                                fontSize: Get.height / 50,
+                                fontFamily: 'Gilroy Normal',
+                              ),
+                            )
+                          : Text(
+                              "",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: Get.height / 50,
+                                fontFamily: 'Gilroy Normal',
+                              ),
+                            ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

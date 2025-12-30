@@ -42,201 +42,210 @@ class _LoginscreenState extends State<Loginscreen> {
         exit(0);
       },
       child: Scaffold(
-        body: Container(
-          color: transparent,
-          height: Get.height,
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    height: Get.height * 0.45,
-                    width: double.infinity,
-                    decoration: BoxDecoration(gradient: gradient.btnGradient),
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: Get.height * 0.13),
-                        Text(
-                          "Welcome Back".tr,
-                          style: TextStyle(
-                            color: WhiteColor,
-                            fontFamily: FontFamily.gilroyBold,
-                            fontSize: 25,
-                            letterSpacing: 1.1,
-                          ),
-                        ),
-                        SizedBox(height: Get.height * 0.005),
-                        Text(
-                          "Sign in to start".tr,
-                          style: TextStyle(
-                            color: WhiteColor,
-                            fontFamily: FontFamily.gilroyMedium,
-                            fontSize: 15,
-                          ),
-                        ),
-                        SizedBox(height: Get.height * 0.04),
-                      ],
-                    ),
-                  ),
-                  // Positioned(
-                  //   top: 10,
-                  //   right: 0,
-                  //   child: SizedBox(
-                  //     height: Get.size.height * 0.23,
-                  //     width: Get.size.width * 0.7,
-                  //     child: Image.asset(
-                  //       "assets/loginImage.png",
-                  //       height: Get.size.height * 0.2,
-                  //       width: Get.size.width * 0.6,
-                  //     ),
-                  //   ),
-                  // )
-                ],
-              ),
-              Positioned(
-                left: 0,
-                right: 0,
-                top: Get.height * 0.32,
-                child: Form(
-                  key: _formKey,
-                  child: Container(
-                    height: Get.height,
-                    width: Get.width * 0.9,
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                    margin: EdgeInsets.symmetric(horizontal: 16),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: WhiteColor,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Sign in !",
-                          style: TextStyle(
-                            color: BlackColor,
-                            fontFamily: "Gilroy Bold",
-                            fontSize: 22,
-                          ),
-                        ),
-                        SizedBox(height: Get.height * 0.005),
-                        Text(
-                          "Welcome back you’ve been missed! ",
-                          style: TextStyle(
-                            color: BlackColor,
-                            fontFamily: "Gilroy Medium",
-                            fontSize: 16,
-                          ),
-                        ),
-                        SizedBox(height: Get.height * 0.02),
-                        passwordtextfield(
-                          controller: Email,
-                          lebaltext: "Enter your email address",
-                          obscureText: false,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your email address';
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(height: Get.height * 0.03),
-                        passwordtextfield(
-                          lebaltext: "Password",
-                          controller: password,
-                          obscureText: _obscureText,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your Password';
-                            }
-                            return null;
-                          },
-                          suffixIcon: Container(
-                            height: 40,
-                            width: 40,
-                            alignment: Alignment.center,
-                            child: InkWell(
-                              onTap: () {
-                                _toggle();
-                              },
-                              child: !_obscureText
-                                  ? Icon(Icons.visibility, color: greyColor)
-                                  : Icon(
-                                      Icons.visibility_off,
-                                      color: greycolor,
-                                    ),
+        body: SafeArea(
+          child: Container(
+            color: transparent,
+            height: Get.height,
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Stack(
+                  children: [
+                    Container(
+                      height: Get.height * 0.45,
+                      width: double.infinity,
+                      decoration: BoxDecoration(gradient: gradient.btnGradient),
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: Get.height * 0.13),
+                          Text(
+                            "Welcome Back".tr,
+                            style: TextStyle(
+                              color: WhiteColor,
+                              fontFamily: FontFamily.gilroyBold,
+                              fontSize: 25,
+                              letterSpacing: 1.1,
                             ),
                           ),
-                        ),
-                        SizedBox(height: Get.height * 0.01),
-                        Row(
-                          children: [
-                            Row(
-                              children: [
-                                Theme(
-                                  data: ThemeData(
-                                    unselectedWidgetColor: greycolor,
-                                  ),
-                                  child: Checkbox(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                    value: isChecked,
-                                    activeColor: BlackColor,
-                                    checkColor: WhiteColor,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        isChecked = value!;
-                                        save("Remember", value);
-                                      });
-                                    },
-                                  ),
-                                ),
-                                SizedBox(width: 8),
-                                Text(
-                                  "Remember Me",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: "Gilroy Medium",
-                                    color: BlackColor,
-                                  ),
-                                ),
-                              ],
+                          SizedBox(height: Get.height * 0.005),
+                          Text(
+                            "Sign in to start".tr,
+                            style: TextStyle(
+                              color: WhiteColor,
+                              fontFamily: FontFamily.gilroyMedium,
+                              fontSize: 15,
                             ),
-                          ],
-                        ),
-                        SizedBox(height: Get.height * 0.02),
-                        GestButton(
-                          Width: Get.size.width,
-                          height: 50,
-                          buttoncolor: blueColor,
-                          margin: EdgeInsets.only(top: 15, left: 30, right: 30),
-                          buttontext: "Login",
-                          style: TextStyle(
-                            fontFamily: FontFamily.gilroyBold,
-                            color: WhiteColor,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
                           ),
-                          onclick: () {
-                            if (_formKey.currentState?.validate() ?? false) {
-                              login(Email.text, password.text);
+                          SizedBox(height: Get.height * 0.04),
+                        ],
+                      ),
+                    ),
+                    // Positioned(
+                    //   top: 10,
+                    //   right: 0,
+                    //   child: SizedBox(
+                    //     height: Get.size.height * 0.23,
+                    //     width: Get.size.width * 0.7,
+                    //     child: Image.asset(
+                    //       "assets/loginImage.png",
+                    //       height: Get.size.height * 0.2,
+                    //       width: Get.size.width * 0.6,
+                    //     ),
+                    //   ),
+                    // )
+                  ],
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  top: Get.height * 0.32,
+                  child: Form(
+                    key: _formKey,
+                    child: Container(
+                      height: Get.height,
+                      width: Get.width * 0.9,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 12,
+                      ),
+                      margin: EdgeInsets.symmetric(horizontal: 16),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: WhiteColor,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Sign in !",
+                            style: TextStyle(
+                              color: BlackColor,
+                              fontFamily: "Gilroy Bold",
+                              fontSize: 22,
+                            ),
+                          ),
+                          SizedBox(height: Get.height * 0.005),
+                          Text(
+                            "Welcome back you’ve been missed! ",
+                            style: TextStyle(
+                              color: BlackColor,
+                              fontFamily: "Gilroy Medium",
+                              fontSize: 16,
+                            ),
+                          ),
+                          SizedBox(height: Get.height * 0.02),
+                          passwordtextfield(
+                            controller: Email,
+                            lebaltext: "Enter your email address",
+                            obscureText: false,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your email address';
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(height: Get.height * 0.03),
+                          passwordtextfield(
+                            lebaltext: "Password",
+                            controller: password,
+                            obscureText: _obscureText,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your Password';
+                              }
+                              return null;
+                            },
+                            suffixIcon: Container(
+                              height: 40,
+                              width: 40,
+                              alignment: Alignment.center,
+                              child: InkWell(
+                                onTap: () {
+                                  _toggle();
+                                },
+                                child: !_obscureText
+                                    ? Icon(Icons.visibility, color: greyColor)
+                                    : Icon(
+                                        Icons.visibility_off,
+                                        color: greycolor,
+                                      ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: Get.height * 0.01),
+                          Row(
+                            children: [
+                              Row(
+                                children: [
+                                  Theme(
+                                    data: ThemeData(
+                                      unselectedWidgetColor: greycolor,
+                                    ),
+                                    child: Checkbox(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      value: isChecked,
+                                      activeColor: BlackColor,
+                                      checkColor: WhiteColor,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          isChecked = value!;
+                                          save("Remember", value);
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    "Remember Me",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontFamily: "Gilroy Medium",
+                                      color: BlackColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: Get.height * 0.02),
+                          GestButton(
+                            Width: Get.size.width,
+                            height: 50,
+                            buttoncolor: blueColor,
+                            margin: EdgeInsets.only(
+                              top: 15,
+                              left: 30,
+                              right: 30,
+                            ),
+                            buttontext: "Login",
+                            style: TextStyle(
+                              fontFamily: FontFamily.gilroyBold,
+                              color: WhiteColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            onclick: () {
+                              if (_formKey.currentState?.validate() ?? false) {
+                                login(Email.text, password.text);
 
-                              save("Remember", isChecked);
-                              initPlatformState();
-                            }
-                          },
-                        ),
-                      ],
+                                save("Remember", isChecked);
+                                initPlatformState();
+                              }
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

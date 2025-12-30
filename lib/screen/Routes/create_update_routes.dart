@@ -52,93 +52,95 @@ class _CreateEditRouteScreenState extends State<CreateEditRouteScreen> {
         centerTitle: true,
       ),
 
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // ROUTE NAME
-            Text("Route Name", style: labelStyle()),
-            SizedBox(height: 6),
-            inputBox(controller: routeNameCtrl, hint: "Enter Route Name"),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // ROUTE NAME
+              Text("Route Name", style: labelStyle()),
+              SizedBox(height: 6),
+              inputBox(controller: routeNameCtrl, hint: "Enter Route Name"),
 
-            SizedBox(height: 18),
+              SizedBox(height: 18),
 
-            // ORDER DATE
-            Text("Order Date", style: labelStyle()),
-            SizedBox(height: 6),
-            InkWell(
-              onTap: pickDate,
-              child: containerField(
-                selectedDate == null
-                    ? "Select Date"
-                    : DateFormat("yyyy-MM-dd").format(selectedDate!),
-              ),
-            ),
-
-            SizedBox(height: 18),
-
-            // TIME SLOT
-            Text("Delivery Time Slot", style: labelStyle()),
-            SizedBox(height: 6),
-            InkWell(
-              onTap: pickTimeSlot,
-              child: containerField(
-                selectedTimeSlot.isEmpty
-                    ? "Select Time Slot"
-                    : selectedTimeSlot,
-              ),
-            ),
-
-            SizedBox(height: 18),
-
-            // CUSTOMERS
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Assign Delivery Boy", style: labelStyle()),
-                // InkWell(
-                //   onTap: selectCustomers,
-                //   child: Text(
-                //     "+ Add",
-                //     style: TextStyle(
-                //       color: blueColor,
-                //       fontFamily: FontFamily.gilroyBold,
-                //     ),
-                //   ),
-                // ),
-              ],
-            ),
-            SizedBox(height: 6),
-            DropdownButtonFormField(
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                filled: true,
-                fillColor: WhiteColor,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+              // ORDER DATE
+              Text("Order Date", style: labelStyle()),
+              SizedBox(height: 6),
+              InkWell(
+                onTap: pickDate,
+                child: containerField(
+                  selectedDate == null
+                      ? "Select Date"
+                      : DateFormat("yyyy-MM-dd").format(selectedDate!),
                 ),
               ),
-              items: [
-                DropdownMenuItem(value: "Rider 1", child: Text("Rider 1")),
-                DropdownMenuItem(value: "Rider 2", child: Text("Rider 2")),
-                DropdownMenuItem(value: "Rider 3", child: Text("Rider 3")),
-              ],
-              onChanged: (value) {},
-            ),
-            SizedBox(height: 6),
-            selectedCustomers.isEmpty
-                ? Text("No customers added", style: greyStyle())
-                : ListView.builder(
-                    itemCount: selectedCustomers.length,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (_, i) => customerTile(i),
-                  ),
 
-            SizedBox(height: 25),
-            saveButton(),
-          ],
+              SizedBox(height: 18),
+
+              // TIME SLOT
+              Text("Delivery Time Slot", style: labelStyle()),
+              SizedBox(height: 6),
+              InkWell(
+                onTap: pickTimeSlot,
+                child: containerField(
+                  selectedTimeSlot.isEmpty
+                      ? "Select Time Slot"
+                      : selectedTimeSlot,
+                ),
+              ),
+
+              SizedBox(height: 18),
+
+              // CUSTOMERS
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Assign Delivery Boy", style: labelStyle()),
+                  // InkWell(
+                  //   onTap: selectCustomers,
+                  //   child: Text(
+                  //     "+ Add",
+                  //     style: TextStyle(
+                  //       color: blueColor,
+                  //       fontFamily: FontFamily.gilroyBold,
+                  //     ),
+                  //   ),
+                  // ),
+                ],
+              ),
+              SizedBox(height: 6),
+              DropdownButtonFormField(
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                  filled: true,
+                  fillColor: WhiteColor,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                items: [
+                  DropdownMenuItem(value: "Rider 1", child: Text("Rider 1")),
+                  DropdownMenuItem(value: "Rider 2", child: Text("Rider 2")),
+                  DropdownMenuItem(value: "Rider 3", child: Text("Rider 3")),
+                ],
+                onChanged: (value) {},
+              ),
+              SizedBox(height: 6),
+              selectedCustomers.isEmpty
+                  ? Text("No customers added", style: greyStyle())
+                  : ListView.builder(
+                      itemCount: selectedCustomers.length,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (_, i) => customerTile(i),
+                    ),
+
+              SizedBox(height: 25),
+              saveButton(),
+            ],
+          ),
         ),
       ),
     );

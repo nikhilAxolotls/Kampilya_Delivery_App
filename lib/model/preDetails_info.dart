@@ -25,18 +25,18 @@ class PreDetailsInfo {
   });
 
   factory PreDetailsInfo.fromJson(Map<String, dynamic> json) => PreDetailsInfo(
-        responseCode: json["ResponseCode"],
-        result: json["Result"],
-        responseMsg: json["ResponseMsg"],
-        orderProductList: OrderProductList.fromJson(json["OrderProductList"]),
-      );
+    responseCode: json["ResponseCode"],
+    result: json["Result"],
+    responseMsg: json["ResponseMsg"],
+    orderProductList: OrderProductList.fromJson(json["OrderProductList"]),
+  );
 
   Map<String, dynamic> toJson() => {
-        "ResponseCode": responseCode,
-        "Result": result,
-        "ResponseMsg": responseMsg,
-        "OrderProductList": orderProductList.toJson(),
-      };
+    "ResponseCode": responseCode,
+    "Result": result,
+    "ResponseMsg": responseMsg,
+    "OrderProductList": orderProductList.toJson(),
+  };
 }
 
 class OrderProductList {
@@ -78,45 +78,46 @@ class OrderProductList {
 
   factory OrderProductList.fromJson(Map<String, dynamic> json) =>
       OrderProductList(
-        orderId: json["order_id"],
+        orderId: json["order_id"].toString(),
         pMethodName: json["p_method_name"],
         customerAddress: json["customer_address"],
         customerName: json["customer_name"],
-        customerMobile: json["customer_mobile"],
-        deliveryCharge: json["Delivery_charge"],
-        couponAmount: json["Coupon_Amount"],
-        walletAmount: json["Wallet_Amount"],
-        flowId: json["flow_id"],
-        storeCharge: json["store_charge"],
-        orderTotal: json["Order_Total"],
-        orderSubTotal: json["Order_SubTotal"],
+        customerMobile: json["customer_mobile"].toString(),
+        deliveryCharge: json["Delivery_charge"].toString(),
+        couponAmount: json["Coupon_Amount"].toString(),
+        walletAmount: json["Wallet_Amount"].toString(),
+        flowId: json["flow_id"].toString(),
+        storeCharge: json["store_charge"].toString(),
+        orderTotal: json["Order_Total"].toString(),
+        orderSubTotal: json["Order_SubTotal"].toString(),
         orderTransactionId: json["Order_Transaction_id"],
         additionalNote: json["Additional_Note"],
         orderStatus: json["Order_Status"],
         orderProductData: List<OrderProductDatum>.from(
-            json["Order_Product_Data"]
-                .map((x) => OrderProductDatum.fromJson(x))),
+          json["Order_Product_Data"].map((x) => OrderProductDatum.fromJson(x)),
+        ),
       );
 
   Map<String, dynamic> toJson() => {
-        "order_id": orderId,
-        "p_method_name": pMethodName,
-        "customer_address": customerAddress,
-        "customer_name": customerName,
-        "customer_mobile": customerMobile,
-        "Delivery_charge": deliveryCharge,
-        "Coupon_Amount": couponAmount,
-        "Wallet_Amount": walletAmount,
-        "flow_id": flowId,
-        "store_charge": storeCharge,
-        "Order_Total": orderTotal,
-        "Order_SubTotal": orderSubTotal,
-        "Order_Transaction_id": orderTransactionId,
-        "Additional_Note": additionalNote,
-        "Order_Status": orderStatus,
-        "Order_Product_Data":
-            List<dynamic>.from(orderProductData.map((x) => x.toJson())),
-      };
+    "order_id": orderId,
+    "p_method_name": pMethodName,
+    "customer_address": customerAddress,
+    "customer_name": customerName,
+    "customer_mobile": customerMobile,
+    "Delivery_charge": deliveryCharge,
+    "Coupon_Amount": couponAmount,
+    "Wallet_Amount": walletAmount,
+    "flow_id": flowId,
+    "store_charge": storeCharge,
+    "Order_Total": orderTotal,
+    "Order_SubTotal": orderSubTotal,
+    "Order_Transaction_id": orderTransactionId,
+    "Additional_Note": additionalNote,
+    "Order_Status": orderStatus,
+    "Order_Product_Data": List<dynamic>.from(
+      orderProductData.map((x) => x.toJson()),
+    ),
+  };
 }
 
 class OrderProductDatum {
@@ -150,36 +151,37 @@ class OrderProductDatum {
 
   factory OrderProductDatum.fromJson(Map<String, dynamic> json) =>
       OrderProductDatum(
-        productId: json["Product_id"],
+        productId: json["Product_id"].toString(),
         productName: json["Product_name"],
-        productQuantity: json["Product_quantity"],
-        productDiscount: json["Product_discount"],
+        productQuantity: json["Product_quantity"].toString(),
+        productDiscount: json["Product_discount"].toString(),
         productImage: json["Product_image"],
-        productPrice: json["Product_price"],
+        productPrice: json["Product_price"].toString(),
         productVariation: json["Product_variation"],
         deliveryTimeslot: json["Delivery_Timeslot"],
         productTotal: json["Product_total"],
-        totaldelivery: json["totaldelivery"],
+        totaldelivery: json["totaldelivery"].toString(),
         startdate: DateTime.parse(json["startdate"]),
         totaldates: List<Totaldate>.from(
-            json["totaldates"].map((x) => Totaldate.fromJson(x))),
+          json["totaldates"].map((x) => Totaldate.fromJson(x)),
+        ),
       );
 
   Map<String, dynamic> toJson() => {
-        "Product_id": productId,
-        "Product_name": productName,
-        "Product_quantity": productQuantity,
-        "Product_discount": productDiscount,
-        "Product_image": productImage,
-        "Product_price": productPrice,
-        "Product_variation": productVariation,
-        "Delivery_Timeslot": deliveryTimeslot,
-        "Product_total": productTotal,
-        "totaldelivery": totaldelivery,
-        "startdate":
-            "${startdate.year.toString().padLeft(4, '0')}-${startdate.month.toString().padLeft(2, '0')}-${startdate.day.toString().padLeft(2, '0')}",
-        "totaldates": List<dynamic>.from(totaldates.map((x) => x.toJson())),
-      };
+    "Product_id": productId,
+    "Product_name": productName,
+    "Product_quantity": productQuantity,
+    "Product_discount": productDiscount,
+    "Product_image": productImage,
+    "Product_price": productPrice,
+    "Product_variation": productVariation,
+    "Delivery_Timeslot": deliveryTimeslot,
+    "Product_total": productTotal,
+    "totaldelivery": totaldelivery,
+    "startdate":
+        "${startdate.year.toString().padLeft(4, '0')}-${startdate.month.toString().padLeft(2, '0')}-${startdate.day.toString().padLeft(2, '0')}",
+    "totaldates": List<dynamic>.from(totaldates.map((x) => x.toJson())),
+  };
 }
 
 class Totaldate {
@@ -194,15 +196,15 @@ class Totaldate {
   });
 
   factory Totaldate.fromJson(Map<String, dynamic> json) => Totaldate(
-        date: DateTime.parse(json["date"]),
-        isComplete: json["is_complete"],
-        formatDate: json["format_date"],
-      );
+    date: DateTime.parse(json["date"]),
+    isComplete: json["is_complete"],
+    formatDate: json["format_date"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "date":
-            "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
-        "is_complete": isComplete,
-        "format_date": formatDate,
-      };
+    "date":
+        "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
+    "is_complete": isComplete,
+    "format_date": formatDate,
+  };
 }

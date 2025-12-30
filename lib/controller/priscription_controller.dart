@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings, avoid_print
 
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:milkmandeliveryboynew/Api/Config.dart';
 import 'package:milkmandeliveryboynew/Api/data_store.dart';
@@ -147,6 +148,13 @@ class PreScriptionControllre extends GetxController implements GetxService {
     productId,
     String? quantity,
   }) async {
+    log(selectDate.toString().split(" ").first);
+    log(DateTime.now().toString().split(" ").first);
+    if (selectDate.toString().split(" ").first !=
+        DateTime.now().toString().split(" ").first) {
+      showToastMessage("You can complete delivery only for today’s date.");
+      return;
+    }
     try {
       isLoading = false;
       Map map = {

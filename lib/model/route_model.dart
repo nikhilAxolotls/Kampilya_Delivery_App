@@ -97,6 +97,9 @@ class Customers {
   String? phone;
   String? orderTotal;
   String? society;
+  String? zone;
+  String? building;
+  String? flatNo;
   String? orderStatus;
   String? orderType;
   List<OrderDetails>? orderDetails;
@@ -107,6 +110,9 @@ class Customers {
     this.phone,
     this.orderTotal,
     this.society,
+    this.zone,
+    this.building,
+    this.flatNo,
     this.orderStatus,
     this.orderType,
     this.orderDetails,
@@ -117,7 +123,10 @@ class Customers {
     address = json['address'];
     phone = json['phone'];
     orderTotal = json['orderTotal'];
-    society = json['society'];
+    society = json['society'] ?? "";
+    zone = json['zone'] ?? "";
+    building = json['building'] ?? "";
+    flatNo = json['flat_no'] ?? "";
     orderStatus = json['order_status'];
     orderType = json['order_type'];
     if (json['order_details'] != null) {

@@ -68,15 +68,14 @@ class _OrderdetailsScreenState extends State<OrderdetailsScreen> {
     return Scaffold(
       backgroundColor: bgcolor,
       appBar: AppBar(
-        leading: BackButton(
-          color: BlackColor,
-        ),
+        leading: BackButton(color: BlackColor),
         title: Text(
           "${"Order ID:".tr} #$oID",
           style: TextStyle(
-              fontFamily: FontFamily.gilroyBold,
-              color: BlackColor,
-              fontSize: 17),
+            fontFamily: FontFamily.gilroyBold,
+            color: BlackColor,
+            fontSize: 17,
+          ),
         ),
         elevation: 0,
         backgroundColor: WhiteColor,
@@ -105,14 +104,12 @@ class _OrderdetailsScreenState extends State<OrderdetailsScreen> {
                                     fontSize: 18,
                                   ),
                                 ),
-                                SizedBox(
-                                  width: Get.width * 0.02,
-                                ),
+                                SizedBox(width: Get.width * 0.02),
                                 Image.asset(
                                   "assets/downarrow.png",
                                   height: 14,
                                   width: 14,
-                                )
+                                ),
                               ],
                             ),
                             SizedBox(height: Get.height * 0.005),
@@ -156,658 +153,664 @@ class _OrderdetailsScreenState extends State<OrderdetailsScreen> {
                               ),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
                 )
               : myOrderController.orderInformetionInfo?.orderdata.flowId == "3"
-                  ? Container(
-                      color: WhiteColor,
-                      height: Get.height * 0.09,
-                      child: Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              ? Container(
+                  color: WhiteColor,
+                  height: Get.height * 0.09,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Row(
                               children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      "$currency${myOrderController.orderInformetionInfo?.orderdata.orderTotal}",
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.gilroyBold,
-                                        color: BlackColor,
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: Get.width * 0.02,
-                                    ),
-                                    Image.asset(
-                                      "assets/downarrow.png",
-                                      height: 14,
-                                      width: 14,
-                                    )
-                                  ],
-                                ),
-                                SizedBox(height: Get.height * 0.005),
                                 Text(
-                                  "Total",
+                                  "$currency${myOrderController.orderInformetionInfo?.orderdata.orderTotal}",
                                   style: TextStyle(
-                                    fontFamily: FontFamily.gilroyMedium,
-                                    color: greyColor,
-                                    fontSize: 16,
+                                    fontFamily: FontFamily.gilroyBold,
+                                    color: BlackColor,
+                                    fontSize: 18,
                                   ),
+                                ),
+                                SizedBox(width: Get.width * 0.02),
+                                Image.asset(
+                                  "assets/downarrow.png",
+                                  height: 14,
+                                  width: 14,
                                 ),
                               ],
                             ),
-                            InkWell(
-                              child: InkWell(
-                                onTap: () {
-                                  myOrderController.mackDecisionApi(
-                                      orderID: oID, status: "1", reson: "n/a");
-                                },
-                                child: Container(
-                                  height: 50,
-                                  width: Get.width * 0.45,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    gradient: gradient.btnGradient,
-                                  ),
-                                  child: Text(
-                                    "Accept",
-                                    style: TextStyle(
-                                      fontFamily: FontFamily.gilroyBold,
-                                      color: WhiteColor,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ),
+                            SizedBox(height: Get.height * 0.005),
+                            Text(
+                              "Total",
+                              style: TextStyle(
+                                fontFamily: FontFamily.gilroyMedium,
+                                color: greyColor,
+                                fontSize: 16,
                               ),
-                            )
+                            ),
                           ],
                         ),
-                      ),
-                    )
-                  : SizedBox();
+                        InkWell(
+                          child: InkWell(
+                            onTap: () {
+                              myOrderController.mackDecisionApi(
+                                orderID: oID,
+                                status: "1",
+                                reson: "n/a",
+                              );
+                            },
+                            child: Container(
+                              height: 50,
+                              width: Get.width * 0.45,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                gradient: gradient.btnGradient,
+                              ),
+                              child: Text(
+                                "Accept",
+                                style: TextStyle(
+                                  fontFamily: FontFamily.gilroyBold,
+                                  color: WhiteColor,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              : SizedBox();
         },
       ),
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: GetBuilder<MyOrderController>(builder: (context) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: myOrderController.isLoading
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: Get.height * 0.02),
-                      myOrderController.orderInformetionInfo!.orderdata
-                              .orderProducts.isNotEmpty
-                          ? Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 12),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: WhiteColor),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Product Info".tr,
-                                    style: TextStyle(
-                                      fontFamily: FontFamily.gilroyBold,
-                                      fontSize: 14,
-                                      color: gradient.defoultColor,
-                                    ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: GetBuilder<MyOrderController>(
+            builder: (context) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: myOrderController.isLoading
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: Get.height * 0.02),
+                          myOrderController
+                                  .orderInformetionInfo!
+                                  .orderdata
+                                  .orderProducts
+                                  .isNotEmpty
+                              ? Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 12,
                                   ),
-                                  SizedBox(
-                                    height: 5,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: WhiteColor,
                                   ),
-                                  SizedBox(
-                                    height: 120,
-                                    width: double.infinity,
-                                    child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      shrinkWrap: true,
-                                      itemCount: myOrderController
-                                          .orderInformetionInfo
-                                          ?.orderdata
-                                          .orderProducts
-                                          .length,
-                                      padding: EdgeInsets.zero,
-                                      itemBuilder: (context, index) {
-                                        return InkWell(
-                                          onTap: () {
-                                            myOrderController
-                                                .changeIndexProductWise(
-                                                    index: index);
-                                          },
-                                          child: Container(
-                                            alignment: Alignment.center,
-                                            margin: EdgeInsets.all(5),
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                  height: 80,
-                                                  width: 100,
-                                                  padding: EdgeInsets.all(5),
-                                                  alignment: Alignment.center,
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    child: FadeInImage
-                                                        .assetNetwork(
-                                                      placeholder:
-                                                          "assets/ezgif.com-crop.gif",
-                                                      placeholderCacheHeight:
-                                                          80,
-                                                      placeholderCacheWidth:
-                                                          100,
-                                                      placeholderFit:
-                                                          BoxFit.cover,
-                                                      image:
-                                                          "${Config.imageurl}${myOrderController.orderInformetionInfo?.orderdata.orderProducts[index].productImage}",
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Product Info".tr,
+                                        style: TextStyle(
+                                          fontFamily: FontFamily.gilroyBold,
+                                          fontSize: 14,
+                                          color: gradient.defoultColor,
+                                        ),
+                                      ),
+                                      SizedBox(height: 5),
+                                      SizedBox(
+                                        height: 120,
+                                        width: double.infinity,
+                                        child: ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          shrinkWrap: true,
+                                          itemCount: myOrderController
+                                              .orderInformetionInfo
+                                              ?.orderdata
+                                              .orderProducts
+                                              .length,
+                                          padding: EdgeInsets.zero,
+                                          itemBuilder: (context, index) {
+                                            return InkWell(
+                                              onTap: () {
+                                                myOrderController
+                                                    .changeIndexProductWise(
+                                                      index: index,
+                                                    );
+                                              },
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                margin: EdgeInsets.all(5),
+                                                child: Column(
+                                                  children: [
+                                                    Container(
                                                       height: 80,
                                                       width: 100,
-                                                      fit: BoxFit.cover,
+                                                      padding: EdgeInsets.all(
+                                                        5,
+                                                      ),
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                              5,
+                                                            ),
+                                                        child: FadeInImage.assetNetwork(
+                                                          placeholder:
+                                                              "assets/ezgif.com-crop.gif",
+                                                          placeholderCacheHeight:
+                                                              80,
+                                                          placeholderCacheWidth:
+                                                              100,
+                                                          placeholderFit:
+                                                              BoxFit.cover,
+                                                          image:
+                                                              "${Config.imageurl}${myOrderController.orderInformetionInfo?.orderdata.orderProducts[index].productImage}",
+                                                          height: 80,
+                                                          width: 100,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 100,
-                                                  child: Text(
-                                                    "${myOrderController.orderInformetionInfo?.orderdata.orderProducts[index].productName}",
-                                                    maxLines: 2,
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                      fontFamily:
-                                                          FontFamily.gilroyBold,
-                                                      color: greytext,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      fontSize: 10,
+                                                    SizedBox(
+                                                      width: 100,
+                                                      child: Text(
+                                                        "${myOrderController.orderInformetionInfo?.orderdata.orderProducts[index].productName}",
+                                                        maxLines: 2,
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                          fontFamily: FontFamily
+                                                              .gilroyBold,
+                                                          color: greytext,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          fontSize: 10,
+                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
+                                                  ],
                                                 ),
-                                              ],
-                                            ),
-                                            decoration: BoxDecoration(
-                                              border: myOrderController
-                                                          .currentIndex ==
-                                                      index
-                                                  ? Border.all(
-                                                      color:
-                                                          gradient.defoultColor)
-                                                  : Border.all(
-                                                      color:
-                                                          Colors.grey.shade300),
-                                              // color: myOrderController
-                                              //             .currentIndex ==
-                                              //         index
-                                              //     ? Color(0xffdaedfd)
-                                              //     : WhiteColor,
-                                              color: WhiteColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(7),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
+                                                decoration: BoxDecoration(
+                                                  border:
+                                                      myOrderController
+                                                              .currentIndex ==
+                                                          index
+                                                      ? Border.all(
+                                                          color: gradient
+                                                              .defoultColor,
+                                                        )
+                                                      : Border.all(
+                                                          color: Colors
+                                                              .grey
+                                                              .shade300,
+                                                        ),
+                                                  // color: myOrderController
+                                                  //             .currentIndex ==
+                                                  //         index
+                                                  //     ? Color(0xffdaedfd)
+                                                  //     : WhiteColor,
+                                                  color: WhiteColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(7),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            )
-                          : SizedBox(),
-                      SizedBox(height: Get.height * 0.02),
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Item Info".tr,
-                              style: TextStyle(
-                                fontFamily: FontFamily.gilroyBold,
-                                fontSize: 14,
-                                color: gradient.defoultColor,
-                              ),
+                                )
+                              : SizedBox(),
+                          SizedBox(height: Get.height * 0.02),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 12,
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Expanded(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Price".tr,
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.gilroyBold,
-                                          fontSize: 13,
-                                          color: greytext,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 2,
-                                      ),
-                                      Text(
-                                        ":",
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.gilroyBold,
-                                          fontSize: 13,
-                                          color: greytext,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        "${currency}${myOrderController.orderInformetionInfo?.orderdata.orderProducts[myOrderController.currentIndex].productPrice}",
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.gilroyBold,
-                                          fontSize: 14,
-                                          color: Colors.grey,
-                                        ),
-                                      )
-                                    ],
+                                Text(
+                                  "Item Info".tr,
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.gilroyBold,
+                                    fontSize: 14,
+                                    color: gradient.defoultColor,
                                   ),
                                 ),
-                                Expanded(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        "Total".tr,
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.gilroyBold,
-                                          fontSize: 13,
-                                          color: greytext,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 2,
-                                      ),
-                                      Text(
-                                        ":",
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.gilroyBold,
-                                          fontSize: 13,
-                                          color: greytext,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        "${currency}${myOrderController.orderInformetionInfo?.orderdata.orderProducts[myOrderController.currentIndex].productPrice}",
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.gilroyBold,
-                                          fontSize: 14,
-                                          color: Colors.grey,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Variation".tr,
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.gilroyBold,
-                                          fontSize: 13,
-                                          color: greytext,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 2,
-                                      ),
-                                      Text(
-                                        ":",
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.gilroyBold,
-                                          fontSize: 13,
-                                          color: greytext,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        "${myOrderController.orderInformetionInfo?.orderdata.orderProducts[myOrderController.currentIndex].productType}",
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.gilroyBold,
-                                          fontSize: 14,
-                                          color: Colors.grey,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        "Qty".tr,
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.gilroyBold,
-                                          fontSize: 13,
-                                          color: greytext,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 2,
-                                      ),
-                                      Text(
-                                        ":",
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.gilroyBold,
-                                          fontSize: 13,
-                                          color: greytext,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        "${myOrderController.orderInformetionInfo?.orderdata.orderProducts[myOrderController.currentIndex].productQuantity}",
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.gilroyBold,
-                                          fontSize: 14,
-                                          color: Colors.grey,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: WhiteColor,
-                        ),
-                      ),
-                      SizedBox(height: Get.height * 0.02),
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                        width: Get.size.width,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Order Info".tr,
-                              style: TextStyle(
-                                fontFamily: FontFamily.gilroyBold,
-                                fontSize: 14,
-                                color: gradient.defoultColor,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 13,
-                            ),
-                            OrderInfo(
-                              title: "Subtotal".tr,
-                              subtitle:
-                                  "${currency}${myOrderController.orderInformetionInfo?.orderdata.orderSubTotal}",
-                            ),
-                            SizedBox(
-                              height: 13,
-                            ),
-                            OrderInfo(
-                              title: "Delivery Charge".tr,
-                              subtitle:
-                                  "${currency}${myOrderController.orderInformetionInfo?.orderdata.deliveryCharge}",
-                            ),
-                            SizedBox(
-                              height: 13,
-                            ),
-                            OrderInfo(
-                              title: "Store Charge".tr,
-                              subtitle:
-                                  "${currency}${myOrderController.orderInformetionInfo?.orderdata.storeCharge}",
-                            ),
-                          
-
-                            myOrderController.orderInformetionInfo?.orderdata
-                                        .couponAmount !=
-                                    "0"
-                                ? SizedBox(
-                                    height: 13,
-                                  )
-                                : SizedBox(),
-                            myOrderController.orderInformetionInfo?.orderdata
-                                        .couponAmount !=
-                                    "0"
-                                ? OrderInfo(
-                                    title: "Coupon Amount".tr,
-                                    subtitle:
-                                        "${currency}${myOrderController.orderInformetionInfo?.orderdata.couponAmount}",
-                                  )
-                                : SizedBox(),
-                            myOrderController.orderInformetionInfo?.orderdata
-                                        .wallAmt !=
-                                    "0"
-                                ? SizedBox(
-                                    height: 13,
-                                  )
-                                : SizedBox(),
-                            myOrderController.orderInformetionInfo?.orderdata
-                                        .wallAmt !=
-                                    "0"
-                                ? OrderInfo(
-                                    title: "Wallet Amount".tr,
-                                    subtitle:
-                                        "${currency}${myOrderController.orderInformetionInfo?.orderdata.wallAmt}",
-                                  )
-                                : SizedBox(),
-                            SizedBox(
-                              height: 13,
-                            ),
-                            OrderInfo(
-                              title: "Total".tr,
-                              subtitle:
-                                  "${currency}${myOrderController.orderInformetionInfo?.orderdata.orderTotal}",
-                            ),
-                            SizedBox(
-                              height: 2,
-                            ),
-                            OrderInfo(
-                              title: "Payment Method".tr,
-                              subtitle:
-                                  "${ myOrderController.orderInformetionInfo
-                                                ?.orderdata.pMethodName ??
-                                            ""}",
-                            ),
-                           
-                            SizedBox(
-                              height: 10,
-                            ),
-                            // myOrderController.nDetailsInfo?.orderProductList
-                            //             .deliveryTimeslot !=
-                            //         "0"
-                            //     ?
-                            OrderInfo(
-                              title: "Delivery time".tr,
-                              subtitle: myOrderController.orderInformetionInfo
-                                  ?.orderdata.deliveryTimeslot,
-                            ),
-           
-                            SizedBox(
-                              height: 10,
-                            ),
-                            OrderInfo(
-                              title: "Address".tr,
-                              subtitle:
-                                  "${ myOrderController.orderInformetionInfo
-                                                ?.orderdata.customerAddress ??
-                                            ""}",
-                            ),
-                           
-                          ],
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: WhiteColor,
-                        ),
-                      ),
-                      SizedBox(height: Get.height * 0.02),
-                      myOrderController.orderInformetionInfo?.orderdata
-                                  .additionalNote !=
-                              ""
-                          ? Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 12),
-                              width: Get.size.width,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Addition Note".tr,
-                                    style: TextStyle(
-                                      fontFamily: FontFamily.gilroyBold,
-                                      color: gradient.defoultColor,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    myOrderController.orderInformetionInfo
-                                            ?.orderdata.additionalNote ??
-                                        "",
-                                    style: TextStyle(
-                                      fontFamily: FontFamily.gilroyBold,
-                                      color: Colors.grey,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: WhiteColor,
-                              ),
-                            )
-                          : SizedBox(),
-                      myOrderController
-                                  .orderInformetionInfo?.orderdata.flowId ==
-                              "4"
-                          ? Stack(
-                              children: [
-                                Container(
-                                  alignment: Alignment.center,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(15),
-                                    child: SfSignaturePad(
-                                      key: _signaturePadKey,
-                                      minimumStrokeWidth: 1,
-                                      maximumStrokeWidth: 3,
-                                      strokeColor: Colors.blue,
-                                      backgroundColor: WhiteColor,
-                                      onDrawEnd: () async {
-                                        ui.Image signatureData =
-                                            await _signaturePadKey.currentState!
-                                                .toImage();
-                                        ByteData? byteData =
-                                            await signatureData.toByteData(
-                                                format: ui.ImageByteFormat.png);
-                                        imageEncoded = base64.encode(
-                                            byteData!.buffer.asUint8List());
-                                        setState(() {});
-                                      },
-                                    ),
-                                  ),
-                                  height: 200,
-                                  width: Get.size.width,
-                                  decoration: BoxDecoration(
-                                    color: WhiteColor,
-                                    border:
-                                        Border.all(color: Colors.grey.shade300),
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                ),
-                                Positioned(
-                                  bottom: 10,
-                                  left: 10,
-                                  child: InkWell(
-                                    onTap: () {
-                                      _signaturePadKey.currentState?.clear();
-                                      setState(() {});
-                                    },
-                                    child: Container(
-                                      height: 40,
-                                      width: 100,
-                                      alignment: Alignment.center,
+                                SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    Expanded(
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                            MainAxisAlignment.start,
                                         children: [
-                                          Image.asset(
-                                            "assets/Thrash.png",
-                                            height: 20,
-                                            width: 20,
-                                            color: WhiteColor,
-                                          ),
-                                          SizedBox(
-                                            width: 4,
-                                          ),
                                           Text(
-                                            "Clear",
+                                            "Price".tr,
                                             style: TextStyle(
                                               fontFamily: FontFamily.gilroyBold,
-                                              color: WhiteColor,
+                                              fontSize: 13,
+                                              color: greytext,
+                                            ),
+                                          ),
+                                          SizedBox(width: 2),
+                                          Text(
+                                            ":",
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.gilroyBold,
+                                              fontSize: 13,
+                                              color: greytext,
+                                            ),
+                                          ),
+                                          SizedBox(width: 5),
+                                          Text(
+                                            "${currency}${myOrderController.orderInformetionInfo?.orderdata.orderProducts[myOrderController.currentIndex].productPrice}",
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.gilroyBold,
+                                              fontSize: 14,
+                                              color: Colors.grey,
                                             ),
                                           ),
                                         ],
                                       ),
-                                      decoration: BoxDecoration(
-                                        gradient: gradient.btnGradient,
-                                        borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    Expanded(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            "Total".tr,
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.gilroyBold,
+                                              fontSize: 13,
+                                              color: greytext,
+                                            ),
+                                          ),
+                                          SizedBox(width: 2),
+                                          Text(
+                                            ":",
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.gilroyBold,
+                                              fontSize: 13,
+                                              color: greytext,
+                                            ),
+                                          ),
+                                          SizedBox(width: 5),
+                                          Text(
+                                            "${currency}${myOrderController.orderInformetionInfo?.orderdata.orderProducts[myOrderController.currentIndex].productPrice}",
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.gilroyBold,
+                                              fontSize: 14,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ),
+                                  ],
+                                ),
+                                SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Variation".tr,
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.gilroyBold,
+                                              fontSize: 13,
+                                              color: greytext,
+                                            ),
+                                          ),
+                                          SizedBox(width: 2),
+                                          Text(
+                                            ":",
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.gilroyBold,
+                                              fontSize: 13,
+                                              color: greytext,
+                                            ),
+                                          ),
+                                          SizedBox(width: 5),
+                                          Text(
+                                            "${myOrderController.orderInformetionInfo?.orderdata.orderProducts[myOrderController.currentIndex].productType}",
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.gilroyBold,
+                                              fontSize: 14,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            "Qty".tr,
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.gilroyBold,
+                                              fontSize: 13,
+                                              color: greytext,
+                                            ),
+                                          ),
+                                          SizedBox(width: 2),
+                                          Text(
+                                            ":",
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.gilroyBold,
+                                              fontSize: 13,
+                                              color: greytext,
+                                            ),
+                                          ),
+                                          SizedBox(width: 5),
+                                          Text(
+                                            "${myOrderController.orderInformetionInfo?.orderdata.orderProducts[myOrderController.currentIndex].productQuantity}",
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.gilroyBold,
+                                              fontSize: 14,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
-                            )
-                          : SizedBox(),
-                    ],
-                  )
-                : SizedBox(
-                    height: Get.height,
-                    width: Get.width,
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        color: gradient.defoultColor,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: WhiteColor,
+                            ),
+                          ),
+                          SizedBox(height: Get.height * 0.02),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 12,
+                            ),
+                            width: Get.size.width,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Order Info".tr,
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.gilroyBold,
+                                    fontSize: 14,
+                                    color: gradient.defoultColor,
+                                  ),
+                                ),
+                                SizedBox(height: 13),
+                                OrderInfo(
+                                  title: "Subtotal".tr,
+                                  subtitle:
+                                      "${currency}${myOrderController.orderInformetionInfo?.orderdata.orderSubTotal}",
+                                ),
+                                SizedBox(height: 13),
+                                OrderInfo(
+                                  title: "Delivery Charge".tr,
+                                  subtitle:
+                                      "${currency}${myOrderController.orderInformetionInfo?.orderdata.deliveryCharge}",
+                                ),
+                                SizedBox(height: 13),
+                                OrderInfo(
+                                  title: "Store Charge".tr,
+                                  subtitle:
+                                      "${currency}${myOrderController.orderInformetionInfo?.orderdata.storeCharge}",
+                                ),
+
+                                myOrderController
+                                            .orderInformetionInfo
+                                            ?.orderdata
+                                            .couponAmount !=
+                                        "0"
+                                    ? SizedBox(height: 13)
+                                    : SizedBox(),
+                                myOrderController
+                                            .orderInformetionInfo
+                                            ?.orderdata
+                                            .couponAmount !=
+                                        "0"
+                                    ? OrderInfo(
+                                        title: "Coupon Amount".tr,
+                                        subtitle:
+                                            "${currency}${myOrderController.orderInformetionInfo?.orderdata.couponAmount}",
+                                      )
+                                    : SizedBox(),
+                                myOrderController
+                                            .orderInformetionInfo
+                                            ?.orderdata
+                                            .wallAmt !=
+                                        "0"
+                                    ? SizedBox(height: 13)
+                                    : SizedBox(),
+                                myOrderController
+                                            .orderInformetionInfo
+                                            ?.orderdata
+                                            .wallAmt !=
+                                        "0"
+                                    ? OrderInfo(
+                                        title: "Wallet Amount".tr,
+                                        subtitle:
+                                            "${currency}${myOrderController.orderInformetionInfo?.orderdata.wallAmt}",
+                                      )
+                                    : SizedBox(),
+                                SizedBox(height: 13),
+                                OrderInfo(
+                                  title: "Total".tr,
+                                  subtitle:
+                                      "${currency}${myOrderController.orderInformetionInfo?.orderdata.orderTotal}",
+                                ),
+                                SizedBox(height: 2),
+                                OrderInfo(
+                                  title: "Payment Method".tr,
+                                  subtitle:
+                                      "${myOrderController.orderInformetionInfo?.orderdata.pMethodName ?? ""}",
+                                ),
+
+                                SizedBox(height: 10),
+                                // myOrderController.nDetailsInfo?.orderProductList
+                                //             .deliveryTimeslot !=
+                                //         "0"
+                                //     ?
+                                OrderInfo(
+                                  title: "Delivery time".tr,
+                                  subtitle: myOrderController
+                                      .orderInformetionInfo
+                                      ?.orderdata
+                                      .deliveryTimeslot,
+                                ),
+
+                                SizedBox(height: 10),
+                                OrderInfo(
+                                  title: "Address".tr,
+                                  subtitle:
+                                      "${myOrderController.orderInformetionInfo?.orderdata.customerAddress ?? ""}",
+                                ),
+                              ],
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: WhiteColor,
+                            ),
+                          ),
+                          SizedBox(height: Get.height * 0.02),
+                          myOrderController
+                                      .orderInformetionInfo
+                                      ?.orderdata
+                                      .additionalNote !=
+                                  ""
+                              ? Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 12,
+                                  ),
+                                  width: Get.size.width,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Addition Note".tr,
+                                        style: TextStyle(
+                                          fontFamily: FontFamily.gilroyBold,
+                                          color: gradient.defoultColor,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                      SizedBox(height: 10),
+                                      Text(
+                                        myOrderController
+                                                .orderInformetionInfo
+                                                ?.orderdata
+                                                .additionalNote ??
+                                            "",
+                                        style: TextStyle(
+                                          fontFamily: FontFamily.gilroyBold,
+                                          color: Colors.grey,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: WhiteColor,
+                                  ),
+                                )
+                              : SizedBox(),
+                          myOrderController
+                                      .orderInformetionInfo
+                                      ?.orderdata
+                                      .flowId ==
+                                  "4"
+                              ? Stack(
+                                  children: [
+                                    Container(
+                                      alignment: Alignment.center,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(15),
+                                        child: SfSignaturePad(
+                                          key: _signaturePadKey,
+                                          minimumStrokeWidth: 1,
+                                          maximumStrokeWidth: 3,
+                                          strokeColor: Colors.blue,
+                                          backgroundColor: WhiteColor,
+                                          onDrawEnd: () async {
+                                            ui.Image signatureData =
+                                                await _signaturePadKey
+                                                    .currentState!
+                                                    .toImage();
+                                            ByteData? byteData =
+                                                await signatureData.toByteData(
+                                                  format:
+                                                      ui.ImageByteFormat.png,
+                                                );
+                                            imageEncoded = base64.encode(
+                                              byteData!.buffer.asUint8List(),
+                                            );
+                                            setState(() {});
+                                          },
+                                        ),
+                                      ),
+                                      height: 200,
+                                      width: Get.size.width,
+                                      decoration: BoxDecoration(
+                                        color: WhiteColor,
+                                        border: Border.all(
+                                          color: Colors.grey.shade300,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      bottom: 10,
+                                      left: 10,
+                                      child: InkWell(
+                                        onTap: () {
+                                          _signaturePadKey.currentState
+                                              ?.clear();
+                                          setState(() {});
+                                        },
+                                        child: Container(
+                                          height: 40,
+                                          width: 100,
+                                          alignment: Alignment.center,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Image.asset(
+                                                "assets/Thrash.png",
+                                                height: 20,
+                                                width: 20,
+                                                color: WhiteColor,
+                                              ),
+                                              SizedBox(width: 4),
+                                              Text(
+                                                "Clear",
+                                                style: TextStyle(
+                                                  fontFamily:
+                                                      FontFamily.gilroyBold,
+                                                  color: WhiteColor,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          decoration: BoxDecoration(
+                                            gradient: gradient.btnGradient,
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : SizedBox(),
+                        ],
+                      )
+                    : SizedBox(
+                        height: Get.height,
+                        width: Get.width,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: gradient.defoultColor,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-          );
-        }),
+              );
+            },
+          ),
+        ),
       ),
     );
   }
@@ -853,7 +856,7 @@ class _OrderdetailsScreenState extends State<OrderdetailsScreen> {
             color: greytext,
           ),
         ),
-       
+
         Text(
           " : ",
           style: TextStyle(
@@ -862,7 +865,7 @@ class _OrderdetailsScreenState extends State<OrderdetailsScreen> {
             color: greytext,
           ),
         ),
-       Spacer(),
+        Spacer(),
         Text(
           subtitle ?? "",
           maxLines: 2,
@@ -871,7 +874,7 @@ class _OrderdetailsScreenState extends State<OrderdetailsScreen> {
             fontSize: 14,
             color: Colors.grey,
           ),
-        )
+        ),
       ],
     );
   }

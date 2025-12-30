@@ -387,22 +387,24 @@ class _onbordingState extends State<onbording> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: WhiteColor,
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/SplashScreen.png"),
-            fit: BoxFit.fill,
-          ),
+      body: SafeArea(
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/SplashScreen.png"),
+              fit: BoxFit.fill,
+            ),
 
-          gradient: gradient.btnGradient,
-        ),
-        alignment: Alignment.center,
-        padding: EdgeInsets.only(top: 75),
-        child: Center(
-          child: Image.asset(
-            "assets/newSplashLogo.png",
-            height: 200,
-            width: 180,
+            gradient: gradient.btnGradient,
+          ),
+          alignment: Alignment.center,
+          padding: EdgeInsets.only(top: 75),
+          child: Center(
+            child: Image.asset(
+              "assets/newSplashLogo.png",
+              height: 200,
+              width: 180,
+            ),
           ),
         ),
       ),
@@ -560,131 +562,136 @@ class _BoardingScreenState extends State<BoardingPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: gradient.defoultColor,
-      body: Stack(
-        children: <Widget>[
-          PageView(
-            controller: _pageController,
-            onPageChanged: _handlingOnPageChanged,
-            physics: const BouncingScrollPhysics(),
-            children: _buildSlides(),
-          ),
-          GestureDetector(
-            onTap: () {
-              Get.to(Loginscreen());
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 40),
-              child: Align(
-                alignment: Alignment.topRight,
-                child: InkWell(
-                  onTap: () {
-                    Get.to(Loginscreen());
-                  },
-                  child: Container(
-                    height: 40,
-                    width: 80,
-                    margin: EdgeInsets.symmetric(vertical: 5),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Skip".tr,
-                      style: TextStyle(
-                        fontFamily: FontFamily.gilroyBold,
-                        fontSize: 14,
-                        color: WhiteColor,
+      body: SafeArea(
+        child: Stack(
+          children: <Widget>[
+            PageView(
+              controller: _pageController,
+              onPageChanged: _handlingOnPageChanged,
+              physics: const BouncingScrollPhysics(),
+              children: _buildSlides(),
+            ),
+            GestureDetector(
+              onTap: () {
+                Get.to(Loginscreen());
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 40,
+                ),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: InkWell(
+                    onTap: () {
+                      Get.to(Loginscreen());
+                    },
+                    child: Container(
+                      height: 40,
+                      width: 80,
+                      margin: EdgeInsets.symmetric(vertical: 5),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Skip".tr,
+                        style: TextStyle(
+                          fontFamily: FontFamily.gilroyBold,
+                          fontSize: 14,
+                          color: WhiteColor,
+                        ),
                       ),
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: Color(0xFF5cbdb6),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Color(0xFF5cbdb6),
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Container(
-              height: Get.size.height * 0.36,
-              width: Get.size.width,
-              margin: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: WhiteColor,
-                borderRadius: BorderRadius.circular(25),
-              ),
-              child: Column(
-                children: <Widget>[
-                  SizedBox(height: Get.size.height * 0.015),
-                  _buildPageIndicator(),
-                  sliderText(),
-                  Spacer(),
-                  _currentPage == 2
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: GestureDetector(
-                            onTap: () {
-                              Get.to(Loginscreen());
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                gradient: gradient.btnGradient,
-                                borderRadius: BorderRadius.circular(15),
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: Container(
+                height: Get.size.height * 0.36,
+                width: Get.size.width,
+                margin: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: WhiteColor,
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(height: Get.size.height * 0.015),
+                    _buildPageIndicator(),
+                    sliderText(),
+                    Spacer(),
+                    _currentPage == 2
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.to(Loginscreen());
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  gradient: gradient.btnGradient,
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                height: 50,
+                                width: double.infinity,
+                                child: Center(
+                                  child: Text(
+                                    "Get Started",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: WhiteColor,
+                                      fontFamily: "Gilroy Bold",
+                                    ),
+                                  ),
+                                ),
                               ),
-                              height: 50,
-                              width: double.infinity,
-                              child: Center(
-                                child: Text(
-                                  "Get Started",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: WhiteColor,
-                                    fontFamily: "Gilroy Bold",
+                            ),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: GestureDetector(
+                              onTap: () {
+                                _pageController.nextPage(
+                                  duration: const Duration(microseconds: 300),
+                                  curve: Curves.easeIn,
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  gradient: gradient.btnGradient,
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                height: 50,
+                                width: double.infinity,
+                                child: Center(
+                                  child: Text(
+                                    "Next",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: WhiteColor,
+                                      fontFamily: "Gilroy Bold",
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: GestureDetector(
-                            onTap: () {
-                              _pageController.nextPage(
-                                duration: const Duration(microseconds: 300),
-                                curve: Curves.easeIn,
-                              );
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                gradient: gradient.btnGradient,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              height: 50,
-                              width: double.infinity,
-                              child: Center(
-                                child: Text(
-                                  "Next",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: WhiteColor,
-                                    fontFamily: "Gilroy Bold",
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                  SizedBox(
-                    height: Get.height * 0.012, //indicator set screen
-                  ),
-                  const SizedBox(height: 20),
-                ],
+                    SizedBox(
+                      height: Get.height * 0.012, //indicator set screen
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

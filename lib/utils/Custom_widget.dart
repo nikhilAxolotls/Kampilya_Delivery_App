@@ -32,10 +32,7 @@ GestButton({
         boxShadow: [
           BoxShadow(
             color: Colors.black12,
-            offset: const Offset(
-              0.5,
-              0.5,
-            ),
+            offset: const Offset(0.5, 0.5),
             blurRadius: 1,
           ), //BoxShadow
         ],
@@ -50,7 +47,10 @@ showToastMessage(message) {
     msg: message,
     gravity: ToastGravity.BOTTOM,
     timeInSecForIosWeb: 1,
-    backgroundColor: gradient.defoultColor,
+    backgroundColor:
+        message == "You can complete delivery only for today’s date."
+        ? Colors.red
+        : gradient.defoultColor,
     textColor: Colors.white,
     fontSize: 14.0,
   );
@@ -61,8 +61,9 @@ bgdecoration({Widget? child, EdgeInsetsGeometry? margin}) {
     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
     margin: margin,
     decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade300)),
+      borderRadius: BorderRadius.circular(12),
+      border: Border.all(color: Colors.grey.shade300),
+    ),
     child: child,
   );
 }
@@ -80,24 +81,19 @@ Future Dialogbox() {
         width: Get.size.width,
         child: Column(
           children: [
-            Image.asset(
-              "assets/successfull.png",
-              height: 150,
-              width: 150,
-            ),
+            Image.asset("assets/successfull.png", height: 150, width: 150),
             Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: Text(
-                  "Delivery Successfully!".tr,
-                  style: TextStyle(
-                    color: gradient.defoultColor,
-                    fontFamily: FontFamily.gilroyBold,
-                    fontSize: 20,
-                  ),
-                )),
-            SizedBox(
-              height: 20,
+              padding: const EdgeInsets.only(left: 15),
+              child: Text(
+                "Delivery Successfully!".tr,
+                style: TextStyle(
+                  color: gradient.defoultColor,
+                  fontFamily: FontFamily.gilroyBold,
+                  fontSize: 20,
+                ),
+              ),
             ),
+            SizedBox(height: 20),
             Text(
               "You’re successfully sent the request",
               maxLines: 3,
@@ -108,9 +104,7 @@ Future Dialogbox() {
                 color: BlackColor,
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
+            SizedBox(height: 20),
             InkWell(
               onTap: () {
                 dashboardController.getDashboardData(

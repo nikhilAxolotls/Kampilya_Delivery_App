@@ -48,143 +48,144 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
         ),
-        body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Stack(
-                  children: [
-                    SizedBox(
-                      height: 130,
-                      width: 130,
-                      child: CircleAvatar(
-                        backgroundColor: WhiteColor,
-                        child: CircleAvatar(
-                          radius: 60,
-                          backgroundColor: WhiteColor,
-                          backgroundImage: NetworkImage(
-                            Config.imageurl + getData.read("StoreLogin")["img"],
+        body: SafeArea(
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                        height: 130,
+                        width: 130,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: BlackColor),
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        child: Image.network(
+                          "${Config.imageurl + getData.read("StoreLogin")["img"]}",
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 10,
+                        right: 0,
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: gradient.btnGradient,
+                          ),
+                          child: Image.asset(
+                            "assets/Vector.png",
+                            color: WhiteColor,
                           ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      bottom: 10,
-                      right: 0,
-                      child: Container(
-                        height: 45,
-                        width: 45,
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          gradient: gradient.btnGradient,
-                        ),
-                        child: Image.asset(
-                          "assets/Vector.png",
-                          color: WhiteColor,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: Get.height * 0.02),
-                Text(
-                  getData.read("StoreLogin")["title"],
-                  style: TextStyle(
-                    fontFamily: FontFamily.gilroyBold,
-                    color: BlackColor,
-                    fontSize: 20,
+                    ],
                   ),
-                ),
-                SizedBox(height: Get.height * 0.005),
-                // Text(getData.read("StoreLogin")["slogan"],
-                //     style: TextStyle(
-                //         fontFamily: FontFamily.gilroyMedium,
-                //         color: greyColor,
-                //         fontSize: 16)),
-                // SizedBox(height: Get.height * 0.005),
-                Text(
-                  getData.read("StoreLogin")["email"],
-                  style: TextStyle(
-                    fontFamily: FontFamily.gilroyMedium,
-                    color: greyColor,
-                    fontSize: 16,
+                  SizedBox(height: Get.height * 0.02),
+                  Text(
+                    getData.read("StoreLogin")["title"],
+                    style: TextStyle(
+                      fontFamily: FontFamily.gilroyBold,
+                      color: BlackColor,
+                      fontSize: 20,
+                    ),
                   ),
-                ),
-                SizedBox(height: Get.height * 0.03),
-                setting(
-                  SettingName: "Notification",
-                  image: "assets/Notification.png",
-                  onTap: () {
-                    notificationController.getNotificationData();
-                    Get.to(() => NotificationScreen());
-                  },
-                ),
-                // SizedBox(height: Get.height * 0.02),
-                GetBuilder<PageListController>(
-                  builder: (context) {
-                    return pageListController.isLodding
-                        ? ListView.builder(
-                            itemCount: pageListController
-                                .dynamicPageData
-                                ?.pagelist
-                                .length,
-                            shrinkWrap: true,
-                            itemExtent: 70,
-                            physics: const NeverScrollableScrollPhysics(),
-                            padding: EdgeInsets.zero,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                child: Column(
-                                  children: [
-                                    setting(
-                                      SettingName: pageListController
-                                          .dynamicPageData
-                                          ?.pagelist[index]
-                                          .title,
-                                      image: "assets/file.png",
-                                      onTap: () {
-                                        Get.to(
-                                          () => Loream(
-                                            title: pageListController
-                                                .dynamicPageData
-                                                ?.pagelist[index]
-                                                .title,
-                                            discription: pageListController
-                                                .dynamicPageData
-                                                ?.pagelist[index]
-                                                .description,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          )
-                        : Center(child: CircularProgressIndicator());
-                  },
-                ),
+                  SizedBox(height: Get.height * 0.005),
+                  // Text(getData.read("StoreLogin")["slogan"],
+                  //     style: TextStyle(
+                  //         fontFamily: FontFamily.gilroyMedium,
+                  //         color: greyColor,
+                  //         fontSize: 16)),
+                  // SizedBox(height: Get.height * 0.005),
+                  Text(
+                    getData.read("StoreLogin")["email"],
+                    style: TextStyle(
+                      fontFamily: FontFamily.gilroyMedium,
+                      color: greyColor,
+                      fontSize: 16,
+                    ),
+                  ),
+                  SizedBox(height: Get.height * 0.03),
+                  setting(
+                    SettingName: "Notification",
+                    image: "assets/Notification.png",
+                    onTap: () {
+                      notificationController.getNotificationData();
+                      Get.to(() => NotificationScreen());
+                    },
+                  ),
+                  // SizedBox(height: Get.height * 0.02),
+                  GetBuilder<PageListController>(
+                    builder: (context) {
+                      return pageListController.isLodding
+                          ? ListView.builder(
+                              itemCount: pageListController
+                                  .dynamicPageData
+                                  ?.pagelist
+                                  .length,
+                              shrinkWrap: true,
+                              itemExtent: 70,
+                              physics: const NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.zero,
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  child: Column(
+                                    children: [
+                                      setting(
+                                        SettingName: pageListController
+                                            .dynamicPageData
+                                            ?.pagelist[index]
+                                            .title,
+                                        image: "assets/file.png",
+                                        onTap: () {
+                                          Get.to(
+                                            () => Loream(
+                                              title: pageListController
+                                                  .dynamicPageData
+                                                  ?.pagelist[index]
+                                                  .title,
+                                              discription: pageListController
+                                                  .dynamicPageData
+                                                  ?.pagelist[index]
+                                                  .description,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            )
+                          : Center(child: CircularProgressIndicator());
+                    },
+                  ),
 
-                setting(
-                  SettingName: "Delete Account",
-                  image: "assets/trash.png",
-                  onTap: () {
-                    deleteSheet();
-                  },
-                ),
-                setting(
-                  SettingName: "Logout",
-                  image: "assets/logout.png",
-                  onTap: () {
-                    logoutSheet();
-                  },
-                ),
-              ],
+                  setting(
+                    SettingName: "Delete Account",
+                    image: "assets/trash.png",
+                    onTap: () {
+                      deleteSheet();
+                    },
+                  ),
+                  setting(
+                    SettingName: "Logout",
+                    image: "assets/logout.png",
+                    onTap: () {
+                      logoutSheet();
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),

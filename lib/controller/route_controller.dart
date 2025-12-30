@@ -7,8 +7,6 @@ import 'package:http/http.dart' as http;
 import 'package:milkmandeliveryboynew/Api/Config.dart';
 import 'package:milkmandeliveryboynew/Api/data_store.dart';
 import 'package:milkmandeliveryboynew/model/route_model.dart';
-import 'package:milkmandeliveryboynew/model/user_store_product_model.dart';
-import 'package:milkmandeliveryboynew/onbording_screen.dart';
 
 class RouteController extends GetxController implements GetxService {
   bool isLoading = false;
