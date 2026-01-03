@@ -13,7 +13,7 @@ import 'package:milkmandeliveryboynew/utils/Colors.dart';
 import 'package:milkmandeliveryboynew/utils/Custom_widget.dart';
 
 class TotalRoutes extends StatefulWidget {
-  final String isBack;
+  final bool isBack;
   const TotalRoutes({super.key, required this.isBack});
 
   @override
@@ -21,117 +21,97 @@ class TotalRoutes extends StatefulWidget {
 }
 
 class _TotalRoutesState extends State<TotalRoutes> {
-  bool isLoading = false;
   PreScriptionControllre preScriptionControllre = Get.find();
-  //RouteController routeController = Get.put(RouteController());
   RouteController routeController = Get.find();
-  List<AssignedRoutes> allRoutes = [];
-  bool isMaterialAccepted = false;
 
   @override
   void initState() {
     super.initState();
 
-    Timer(Duration(seconds: 2), () {
+    Timer(Duration(milliseconds: 100), () {
       routeController.getRouteData();
     });
-
-    allRoutes = routeController.routeInfo?.assignedRoutes ?? [];
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: bgcolor,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: WhiteColor,
-        elevation: 0,
-        leading: widget.isBack == "1"
-            ? IconButton(
-                icon: Icon(Icons.arrow_back, color: BlackColor),
-                onPressed: () => Navigator.pop(context),
-              )
-            : SizedBox(),
-        centerTitle: true,
-        title: Text(
-          'All Routes',
-          style: TextStyle(
-            color: BlackColor,
-            fontFamily: FontFamily.gilroyBold,
-            fontSize: 18,
-          ),
-        ),
-        // actions: [
-        //   IconButton(
-        //     icon: Icon(Icons.add_circle_outline, color: greenColor),
-        //     onPressed: () {
-        //       // Navigate to create route screen
-        //       // Navigator.push(context, MaterialPageRoute(builder: (_) => CreateEditRouteScreen()));
-        //     },
-        //   ),
-        // ],
-      ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          // Add API call to refresh routes
-          await Future.delayed(Duration(seconds: 1));
-          routeController.getRouteData();
-          Timer(Duration(seconds: 3), () {
-            allRoutes = routeController.routeInfo!.assignedRoutes!;
-          });
-        },
-        color: greenColor,
-        child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header Statistics
-              _buildHeaderStatistics(),
-
-              SizedBox(height: 20),
-
-              // Routes Section Header
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'All Routes',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontFamily: FontFamily.gilroyBold,
-                        color: BlackColor,
-                      ),
-                    ),
-                    Text(
-                      '${allRoutes.length} total routes',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontFamily: FontFamily.gilroyMedium,
-                        color: greyColor,
-                      ),
-                    ),
-                  ],
-                ),
+    return GetBuilder<RouteController>(
+      builder: (controller) {
+        List<AssignedRoutes> allRoutes =
+            controller.routeInfo?.assignedRoutes ?? [];
+        return Scaffold(
+          backgroundColor: bgcolor,
+          appBar: AppBar(
+            automaticallyImplyLeading: widget.isBack,
+            backgroundColor: WhiteColor,
+            elevation: 0,
+            leading: widget.isBack
+                ? IconButton(
+                    icon: Icon(Icons.arrow_back, color: BlackColor),
+                    onPressed: () => Navigator.pop(context),
+                  )
+                : SizedBox(),
+            centerTitle: true,
+            title: Text(
+              'All Routes',
+              style: TextStyle(
+                color: BlackColor,
+                fontFamily: FontFamily.gilroyBold,
+                fontSize: 18,
               ),
-
-              SizedBox(height: 12),
-
-              // Routes List
-              allRoutes.isEmpty ? _buildEmptyState() : _buildRoutesList(),
-
-              SizedBox(height: 20),
-            ],
+            ),
           ),
-        ),
-      ),
+          body: RefreshIndicator(
+            onRefresh: () async {
+              await controller.getRouteData();
+            },
+            color: greenColor,
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildHeaderStatistics(allRoutes),
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'All Routes',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: FontFamily.gilroyBold,
+                            color: BlackColor,
+                          ),
+                        ),
+                        Text(
+                          '${allRoutes.length} total routes',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontFamily: FontFamily.gilroyMedium,
+                            color: greyColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 12),
+                  allRoutes.isEmpty
+                      ? _buildEmptyState()
+                      : _buildRoutesList(allRoutes),
+                  SizedBox(height: 20),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
-  Widget _buildHeaderStatistics() {
+  Widget _buildHeaderStatistics(List<AssignedRoutes> allRoutes) {
     int totalRoutes = allRoutes.length;
     int activeRoutes = allRoutes.where((r) => r.status == 'Active').length;
     int completedRoutes = allRoutes
@@ -272,7 +252,7 @@ class _TotalRoutesState extends State<TotalRoutes> {
     );
   }
 
-  Widget _buildRoutesList() {
+  Widget _buildRoutesList(List<AssignedRoutes> allRoutes) {
     return ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
@@ -285,6 +265,7 @@ class _TotalRoutesState extends State<TotalRoutes> {
   Widget _buildRouteCard(AssignedRoutes route) {
     Color statusColor = _getStatusColor(route.status ?? "Pending");
     IconData statusIcon = _getStatusIcon(route.status ?? "Pending");
+    bool isMaterialAccepted = route.materialStatus == "accepted";
 
     int cow_halp_ltr_qty = 0;
     int cow_one_ltr_qty = 0;
@@ -959,9 +940,7 @@ class _TotalRoutesState extends State<TotalRoutes> {
                   child: InkWell(
                     onTap: () {
                       Get.back();
-                      // routeController.acceptRouteMaterial(route.routeId);
-                      isMaterialAccepted = true;
-                      setState(() {});
+                      routeController.acceptRouteMaterial(route);
                     },
                     child: Container(
                       alignment: Alignment.center,

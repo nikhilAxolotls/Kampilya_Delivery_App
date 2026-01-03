@@ -25,21 +25,22 @@ class DashboardInfo {
   String withdrawLimit;
 
   factory DashboardInfo.fromJson(Map<String, dynamic> json) => DashboardInfo(
-        responseCode: json["ResponseCode"],
-        result: json["Result"],
-        responseMsg: json["ResponseMsg"],
-        reportData: List<ReportDatum>.from(
-            json["report_data"].map((x) => ReportDatum.fromJson(x))),
-        withdrawLimit: json["withdraw_limit"],
-      );
+    responseCode: json["ResponseCode"],
+    result: json["Result"],
+    responseMsg: json["ResponseMsg"],
+    reportData: List<ReportDatum>.from(
+      json["report_data"].map((x) => ReportDatum.fromJson(x)),
+    ),
+    withdrawLimit: json["withdraw_limit"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "ResponseCode": responseCode,
-        "Result": result,
-        "ResponseMsg": responseMsg,
-        "report_data": List<dynamic>.from(reportData.map((x) => x.toJson())),
-        "withdraw_limit": withdrawLimit,
-      };
+    "ResponseCode": responseCode,
+    "Result": result,
+    "ResponseMsg": responseMsg,
+    "report_data": List<dynamic>.from(reportData.map((x) => x.toJson())),
+    "withdraw_limit": withdrawLimit,
+  };
 }
 
 class ReportDatum {
@@ -54,14 +55,14 @@ class ReportDatum {
   String url;
 
   factory ReportDatum.fromJson(Map<String, dynamic> json) => ReportDatum(
-        title: json["title"],
-        reportData: json["report_data"],
-        url: json["url"],
-      );
+    title: json["title"],
+    reportData: json["report_data"],
+    url: json["url"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "title": title,
-        "report_data": reportData,
-        "url": url,
-      };
+    "title": title,
+    "report_data": reportData,
+    "url": url,
+  };
 }

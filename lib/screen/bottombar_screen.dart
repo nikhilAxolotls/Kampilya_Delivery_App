@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:get/get.dart';
+import 'package:milkmandeliveryboynew/controller/bottombar_controller.dart';
 import 'package:milkmandeliveryboynew/controller/route_controller.dart';
 import 'package:milkmandeliveryboynew/helpar/fontfamily_model.dart';
 import 'package:milkmandeliveryboynew/screen/Routes/total_routes.dart';
@@ -17,8 +18,6 @@ import 'package:milkmandeliveryboynew/utils/Colors.dart';
 import 'package:flutter/material.dart';
 import 'package:milkmandeliveryboynew/utils/connectivity_service.dart';
 
-int selectedIndex = 0;
-
 class BottoBarScreen extends StatefulWidget {
   const BottoBarScreen({Key? key}) : super(key: key);
 
@@ -28,6 +27,7 @@ class BottoBarScreen extends StatefulWidget {
 
 class _BottoBarScreenState extends State<BottoBarScreen>
     with TickerProviderStateMixin {
+  BottomBarController bottomBarController = Get.find();
   RouteController routeController = Get.put(RouteController());
   late int _lastTimeBackButtonWasTapped;
   static const exitTimeInMillis = 2000;
@@ -70,9 +70,7 @@ class _BottoBarScreenState extends State<BottoBarScreen>
 
         // Navigate to pending tab if any
         if (_pendingNavigationIndex >= 0) {
-          setState(() {
-            selectedIndex = _pendingNavigationIndex;
-          });
+          bottomBarController.changeIndex(_pendingNavigationIndex);
           _pendingNavigationIndex = -1;
         }
       }
@@ -87,9 +85,7 @@ class _BottoBarScreenState extends State<BottoBarScreen>
       _showNoInternetScreen();
     } else {
       // Normal navigation
-      setState(() {
-        selectedIndex = index;
-      });
+      bottomBarController.changeIndex(index);
     }
   }
 
@@ -110,9 +106,7 @@ class _BottoBarScreenState extends State<BottoBarScreen>
 
                   // Navigate to pending tab
                   if (_pendingNavigationIndex >= 0) {
-                    setState(() {
-                      selectedIndex = _pendingNavigationIndex;
-                    });
+                    bottomBarController.changeIndex(_pendingNavigationIndex);
                     _pendingNavigationIndex = -1;
                   }
                 }
@@ -133,7 +127,7 @@ class _BottoBarScreenState extends State<BottoBarScreen>
     MyBookingScreen(isBack: "2"),
 
     //MyPriscriptionOrder(isBack: "2"),
-    TotalRoutes(isBack: "2"),
+    TotalRoutes(isBack: false),
     ProfileScreen(),
   ];
   @override
@@ -143,61 +137,69 @@ class _BottoBarScreenState extends State<BottoBarScreen>
         return exit(0);
       },
       child: Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          unselectedItemColor: greyColor,
-          // backgroundColor: BlackColor,
-          elevation: 0,
-          selectedLabelStyle: const TextStyle(
-            fontFamily: FontFamily.gilroyBold,
-            // fontWeight: FontWeight.bold,
-            fontSize: 12,
+        bottomNavigationBar: Obx(
+          () => BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            unselectedItemColor: greyColor,
+            elevation: 0,
+            selectedLabelStyle: const TextStyle(
+              fontFamily: FontFamily.gilroyBold,
+              fontSize: 12,
+            ),
+            fixedColor: gradient.defoultColor,
+            unselectedLabelStyle: const TextStyle(
+              fontFamily: FontFamily.gilroyMedium,
+            ),
+            currentIndex: bottomBarController.selectedIndex.value,
+            landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
+            showSelectedLabels: true,
+            showUnselectedLabels: true,
+            items: [
+              BottomNavigationBarItem(
+                icon: Image.asset(
+                  "assets/dashboard.png",
+                  color: bottomBarController.selectedIndex.value == 0
+                      ? gradient.defoultColor
+                      : greycolor,
+                  height: MediaQuery.of(context).size.height / 40,
+                ),
+                label: 'Dashboard',
+              ),
+              BottomNavigationBarItem(
+                icon: Image.asset(
+                  "assets/myorder.png",
+                  color: bottomBarController.selectedIndex.value == 1
+                      ? gradient.defoultColor
+                      : greycolor,
+                  height: MediaQuery.of(context).size.height / 37,
+                ),
+                label: 'My Order',
+              ),
+              BottomNavigationBarItem(
+                icon: Image.asset(
+                  "assets/Prescription.png",
+                  color: bottomBarController.selectedIndex.value == 2
+                      ? gradient.defoultColor
+                      : greycolor,
+                  height: MediaQuery.of(context).size.height / 35,
+                ),
+                label: 'Assigned Routes',
+              ),
+              BottomNavigationBarItem(
+                icon: Image.asset(
+                  "assets/Profile.png",
+                  color: bottomBarController.selectedIndex.value == 3
+                      ? gradient.defoultColor
+                      : greycolor,
+                  height: MediaQuery.of(context).size.height / 35,
+                ),
+                label: 'Profile',
+              ),
+            ],
+            onTap: _handleBottomNavTap,
           ),
-          fixedColor: gradient.defoultColor,
-          unselectedLabelStyle: const TextStyle(
-            fontFamily: FontFamily.gilroyMedium,
-          ),
-          currentIndex: selectedIndex,
-          landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          items: [
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                "assets/dashboard.png",
-                color: selectedIndex == 0 ? gradient.defoultColor : greycolor,
-                height: MediaQuery.of(context).size.height / 40,
-              ),
-              label: 'Dashboard',
-            ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                "assets/myorder.png",
-                color: selectedIndex == 1 ? gradient.defoultColor : greycolor,
-                height: MediaQuery.of(context).size.height / 37,
-              ),
-              label: 'My Order',
-            ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                "assets/Prescription.png",
-                color: selectedIndex == 2 ? gradient.defoultColor : greycolor,
-                height: MediaQuery.of(context).size.height / 35,
-              ),
-              label: 'Subscription',
-            ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                "assets/Profile.png",
-                color: selectedIndex == 3 ? gradient.defoultColor : greycolor,
-                height: MediaQuery.of(context).size.height / 35,
-              ),
-              label: 'Profile',
-            ),
-          ],
-          onTap: _handleBottomNavTap,
         ),
-        body: myChilders[selectedIndex],
+        body: Obx(() => myChilders[bottomBarController.selectedIndex.value]),
       ),
     );
   }

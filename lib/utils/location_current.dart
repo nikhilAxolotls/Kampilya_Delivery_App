@@ -10,12 +10,8 @@ export 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
 /// However in some situations where the supplied address could not be
 /// resolved into a single [Location], multiple [Location] instances may be
 /// returned.
-Future<List<Location>> locationFromAddress(
-  String address,
-) =>
-    GeocodingPlatform.instance!.locationFromAddress(
-      address,
-    );
+Future<List<Location>> locationFromAddress(String address) =>
+    GeocodingPlatform.instance!.locationFromAddress(address);
 
 /// Returns a list of [Placemark] instances found for the supplied
 /// coordinates.
@@ -27,11 +23,7 @@ Future<List<Location>> locationFromAddress(
 Future<List<Placemark>> placemarkFromCoordinates(
   double latitude,
   double longitude,
-) =>
-    GeocodingPlatform.instance!.placemarkFromCoordinates(
-      latitude,
-      longitude,
-    );
+) => GeocodingPlatform.instance!.placemarkFromCoordinates(latitude, longitude);
 
 /// Overrides default locale
 ///
@@ -39,12 +31,8 @@ Future<List<Placemark>> placemarkFromCoordinates(
 /// When not used the current active locale of the device will be used.
 /// The `localeIdentifier` should be formatted using the syntax:
 /// [languageCode]_[countryCode] (eg. en_US or nl_NL).
-Future<void> setLocaleIdentifier(
-  String localeIdentifier,
-) =>
-    GeocodingPlatform.instance!.setLocaleIdentifier(
-      localeIdentifier,
-    );
+Future<void> setLocaleIdentifier(String localeIdentifier) =>
+    GeocodingPlatform.instance!.setLocaleIdentifier(localeIdentifier);
 
 /// Returns true if there is a geocoder implementation present that may return results.
 /// If true, there is still no guarantee that any individual geocoding attempt will succeed.

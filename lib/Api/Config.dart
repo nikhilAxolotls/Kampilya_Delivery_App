@@ -41,4 +41,5 @@ class Config {
   static const String userStoreDataApi = "u_store_data.php";
   //--------------- Route ----------------//
   static const String routeApi = "get_rider_routes.php";
+  static const String materialAcceptApi = "material_accept.php";
 }

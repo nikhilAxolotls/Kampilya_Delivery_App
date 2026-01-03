@@ -34,7 +34,7 @@ class RouteInfo {
 class AssignedRoutes {
   String? routeName;
   String? routeId;
-
+  String? materialStatus;
   String? deliveryTime;
   String? status;
   String? total;
@@ -47,7 +47,7 @@ class AssignedRoutes {
     this.routeName,
     this.routeId,
     this.delivery_date,
-
+    this.materialStatus,
     this.deliveryTime,
     this.status,
     this.total,
@@ -57,7 +57,8 @@ class AssignedRoutes {
 
   AssignedRoutes.fromJson(Map<String, dynamic> json) {
     routeName = json['route_name'];
-    routeId = json['route_id'];
+    routeId = json['route_id'].toString();
+    materialStatus = json['material_status'].toString().toLowerCase();
 
     delivery_date =
         json['delivery_date'] ??
@@ -79,6 +80,7 @@ class AssignedRoutes {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['route_name'] = this.routeName;
     data['route_id'] = this.routeId;
+    data['material_status'] = this.materialStatus;
 
     data['deliveryTime'] = this.deliveryTime;
     data['status'] = this.status;

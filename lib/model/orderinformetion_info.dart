@@ -32,11 +32,11 @@ class OrderInformetionInfo {
       );
 
   Map<String, dynamic> toJson() => {
-        "ResponseCode": responseCode,
-        "Result": result,
-        "ResponseMsg": responseMsg,
-        "orderdata": orderdata.toJson(),
-      };
+    "ResponseCode": responseCode,
+    "Result": result,
+    "ResponseMsg": responseMsg,
+    "orderdata": orderdata.toJson(),
+  };
 }
 
 class Orderdata {
@@ -89,57 +89,57 @@ class Orderdata {
   });
 
   factory Orderdata.fromJson(Map<String, dynamic> json) => Orderdata(
-        riderTitle: json["rider_title"],
-        riderImage: json["rider_image"],
-        riderMobile: json["rider_mobile"],
-        orderId: json["order_id"].toString(),
-        orderDate: DateTime.parse(json["order_date"]),
-        pMethodName: json["p_method_name"],
-        customerAddress: json["customer_address"],
-        customerName: json["customer_name"],
-        orderType: json["Order_Type"],
-        wallAmt: json["wall_amt"].toString(),
-        customerMobile: json["customer_mobile"].toString(),
-        storeCharge: json["store_charge"].toString(),
-        deliveryCharge: json["Delivery_charge"].toString(),
-        deliveryTimeslot: json["Delivery_Timeslot"],
-        couponAmount: json["Coupon_Amount"].toString(),
-        orderTotal: json["Order_Total"].toString(),
-        orderSubTotal: json["Order_SubTotal"].toString(),
-        flowId: json["flow_id"].toString(),
-        orderTransactionId: json["Order_Transaction_id"],
-        additionalNote: json["Additional_Note"],
-        orderStatus: json["Order_Status"],
-        orderProducts: List<OrderProduct>.from(
-            json["order_products"].map((x) => OrderProduct.fromJson(x))),
-      );
+    riderTitle: json["rider_title"],
+    riderImage: json["rider_image"],
+    riderMobile: json["rider_mobile"],
+    orderId: json["order_id"].toString(),
+    orderDate: DateTime.parse(json["order_date"]),
+    pMethodName: json["p_method_name"],
+    customerAddress: json["customer_address"],
+    customerName: json["customer_name"],
+    orderType: json["Order_Type"],
+    wallAmt: json["wall_amt"].toString(),
+    customerMobile: json["customer_mobile"].toString(),
+    storeCharge: json["store_charge"].toString(),
+    deliveryCharge: json["Delivery_charge"].toString(),
+    deliveryTimeslot: json["Delivery_Timeslot"],
+    couponAmount: json["Coupon_Amount"].toString(),
+    orderTotal: json["Order_Total"].toString(),
+    orderSubTotal: json["Order_SubTotal"].toString(),
+    flowId: json["flow_id"].toString(),
+    orderTransactionId: json["Order_Transaction_id"],
+    additionalNote: json["Additional_Note"],
+    orderStatus: json["Order_Status"],
+    orderProducts: List<OrderProduct>.from(
+      json["order_products"].map((x) => OrderProduct.fromJson(x)),
+    ),
+  );
 
   Map<String, dynamic> toJson() => {
-        "rider_title": riderTitle,
-        "rider_image": riderImage,
-        "rider_mobile": riderMobile,
-        "order_id": orderId,
-        "order_date":
-            "${orderDate.year.toString().padLeft(4, '0')}-${orderDate.month.toString().padLeft(2, '0')}-${orderDate.day.toString().padLeft(2, '0')}",
-        "p_method_name": pMethodName,
-        "customer_address": customerAddress,
-        "customer_name": customerName,
-        "Order_Type": orderType,
-        "wall_amt": wallAmt,
-        "customer_mobile": customerMobile,
-        "store_charge": storeCharge,
-        "Delivery_charge": deliveryCharge,
-        "Delivery_Timeslot": deliveryTimeslot,
-        "Coupon_Amount": couponAmount,
-        "Order_Total": orderTotal,
-        "Order_SubTotal": orderSubTotal,
-        "flow_id": flowId,
-        "Order_Transaction_id": orderTransactionId,
-        "Additional_Note": additionalNote,
-        "Order_Status": orderStatus,
-        "order_products":
-            List<dynamic>.from(orderProducts.map((x) => x.toJson())),
-      };
+    "rider_title": riderTitle,
+    "rider_image": riderImage,
+    "rider_mobile": riderMobile,
+    "order_id": orderId,
+    "order_date":
+        "${orderDate.year.toString().padLeft(4, '0')}-${orderDate.month.toString().padLeft(2, '0')}-${orderDate.day.toString().padLeft(2, '0')}",
+    "p_method_name": pMethodName,
+    "customer_address": customerAddress,
+    "customer_name": customerName,
+    "Order_Type": orderType,
+    "wall_amt": wallAmt,
+    "customer_mobile": customerMobile,
+    "store_charge": storeCharge,
+    "Delivery_charge": deliveryCharge,
+    "Delivery_Timeslot": deliveryTimeslot,
+    "Coupon_Amount": couponAmount,
+    "Order_Total": orderTotal,
+    "Order_SubTotal": orderSubTotal,
+    "flow_id": flowId,
+    "Order_Transaction_id": orderTransactionId,
+    "Additional_Note": additionalNote,
+    "Order_Status": orderStatus,
+    "order_products": List<dynamic>.from(orderProducts.map((x) => x.toJson())),
+  };
 }
 
 class OrderProduct {
@@ -160,20 +160,20 @@ class OrderProduct {
   });
 
   factory OrderProduct.fromJson(Map<String, dynamic> json) => OrderProduct(
-        productQuantity: json["Product_quantity"].toString(),
-        productName: json["Product_name"],
-        productDiscount: json["Product_discount"].toString(),
-        productImage: json["Product_image"],
-        productPrice: json["Product_price"].toString(),
-        productType: json["Product_type"],
-      );
+    productQuantity: json["Product_quantity"].toString(),
+    productName: json["Product_name"],
+    productDiscount: json["Product_discount"].toString(),
+    productImage: json["Product_image"],
+    productPrice: json["Product_price"].toString(),
+    productType: json["Product_type"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "Product_quantity": productQuantity,
-        "Product_name": productName,
-        "Product_discount": productDiscount,
-        "Product_image": productImage,
-        "Product_price": productPrice,
-        "Product_type": productType,
-      };
+    "Product_quantity": productQuantity,
+    "Product_name": productName,
+    "Product_discount": productDiscount,
+    "Product_image": productImage,
+    "Product_price": productPrice,
+    "Product_type": productType,
+  };
 }

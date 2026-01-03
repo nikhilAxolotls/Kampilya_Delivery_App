@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last, sized_box_for_whitespace, prefer_typing_uninitialized_variables, prefer_interpolation_to_compose_strings, avoid_print, unused_local_variable, unnecessary_brace_in_string_interps, unnecessary_string_interpolations, non_constant_identifier_names, prefer_const_literals_to_create_immutables, unused_element, unused_field, prefer_final_fields
 
 import 'dart:convert';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:milkmandeliveryboynew/Api/Config.dart';
 import 'package:milkmandeliveryboynew/controller/priscription_controller.dart';
 import 'package:milkmandeliveryboynew/controller/store_product_controller.dart';

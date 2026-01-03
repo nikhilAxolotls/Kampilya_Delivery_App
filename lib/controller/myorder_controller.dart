@@ -28,10 +28,7 @@ class MyOrderController extends GetxController implements GetxService {
         "status": statusWise,
       };
       Uri uri = Uri.parse(Config.path + Config.myOrderApi);
-      var response = await http.post(
-        uri,
-        body: jsonEncode(map),
-      );
+      var response = await http.post(uri, body: jsonEncode(map));
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
         orderInfo = OrderInfo.fromJson(result);
@@ -52,10 +49,7 @@ class MyOrderController extends GetxController implements GetxService {
         "rider_id": getData.read("StoreLogin")["id"],
       };
       Uri uri = Uri.parse(Config.path + Config.orderInformetion);
-      var response = await http.post(
-        uri,
-        body: jsonEncode(map),
-      );
+      var response = await http.post(uri, body: jsonEncode(map));
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
         orderInformetionInfo = OrderInformetionInfo.fromJson(result);
@@ -69,17 +63,10 @@ class MyOrderController extends GetxController implements GetxService {
 
   mackDecisionApi({String? orderID, status, reson}) async {
     try {
-      Map map = {
-        "oid": orderID,
-        "status": status,
-        "comment_reject": reson,
-      };
+      Map map = {"oid": orderID, "status": status, "comment_reject": reson};
       print(map.toString());
       Uri uri = Uri.parse(Config.path + Config.makeDecision);
-      var response = await http.post(
-        uri,
-        body: jsonEncode(map),
-      );
+      var response = await http.post(uri, body: jsonEncode(map));
       print("****************" + response.body.toString());
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
@@ -110,10 +97,7 @@ class MyOrderController extends GetxController implements GetxService {
       };
       print(map.toString());
       Uri uri = Uri.parse(Config.path + Config.completeOrder);
-      var response = await http.post(
-        uri,
-        body: jsonEncode(map),
-      );
+      var response = await http.post(uri, body: jsonEncode(map));
       print("****************" + response.body.toString());
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);

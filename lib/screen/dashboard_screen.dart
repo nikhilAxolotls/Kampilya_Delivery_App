@@ -3,8 +3,10 @@
 import 'package:milkmandeliveryboynew/Api/data_store.dart';
 import 'package:milkmandeliveryboynew/controller/dashboard_controller.dart';
 import 'package:milkmandeliveryboynew/controller/notificatio_controller.dart';
+import 'package:milkmandeliveryboynew/controller/bottombar_controller.dart';
 import 'package:milkmandeliveryboynew/helpar/fontfamily_model.dart';
 import 'package:milkmandeliveryboynew/helpar/routes_helper.dart';
+import 'package:milkmandeliveryboynew/screen/Routes/total_routes.dart';
 import 'package:milkmandeliveryboynew/screen/notification_screen.dart';
 import 'package:milkmandeliveryboynew/utils/Colors.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +24,7 @@ class DashBoardScreen extends StatefulWidget {
 class _DashBoardScreenState extends State<DashBoardScreen> {
   DashboardController dashboardController = Get.find();
   NotificationController notificationController = Get.find();
+  BottomBarController bottomBarController = Get.find();
 
   @override
   void initState() {
@@ -154,7 +157,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                     } else if (index == 2) {
                                       //---------------------update(Routes) --------------------//
                                       // Get.toNamed(Routes.myPriscriptionOrder);
-                                      Get.toNamed(Routes.totalRoutes);
+
+                                      // Get.toNamed(
+                                      //   Routes.totalRoutes,
+                                      //   arguments: {"isBack": true},
+                                      // );
+                                      // call to bottombar screen and set selected index as 2
+                                      bottomBarController.changeIndex(2);
                                     }
                                   },
                                   child: Container(

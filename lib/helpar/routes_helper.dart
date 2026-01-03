@@ -3,6 +3,7 @@
 import 'package:milkmandeliveryboynew/onbording_screen.dart';
 import 'package:milkmandeliveryboynew/screen/Routes/route_details_screen.dart';
 import 'package:milkmandeliveryboynew/screen/Routes/total_routes.dart';
+import 'package:milkmandeliveryboynew/screen/bottombar_screen.dart';
 import 'package:milkmandeliveryboynew/screen/myorder_screen.dart';
 import 'package:milkmandeliveryboynew/screen/orderdetails_screen.dart';
 import 'package:milkmandeliveryboynew/screen/subscription_order.dart';
@@ -11,6 +12,7 @@ import 'package:get/get.dart';
 
 class Routes {
   static String initial = "/";
+  static String bottomBarScreen = "/bottomBarScreen";
   static String myBookingScreen = "/myBookingScreen";
   static String orderDetailsScreen = "/orderDetailsScreen";
   static String myPriscriptionOrder = "/MyPriscriptionOrder";
@@ -23,6 +25,7 @@ class Routes {
 
 final getPages = [
   GetPage(name: Routes.initial, page: () => onbording()),
+  GetPage(name: Routes.bottomBarScreen, page: () => BottoBarScreen()),
   GetPage(
     name: Routes.myBookingScreen,
     page: () => MyBookingScreen(isBack: "1"),
@@ -34,9 +37,6 @@ final getPages = [
   ),
   GetPage(name: Routes.myPriscriptionInfo, page: () => MyPriscriptionInfo()),
   //Routes
-  GetPage(
-    name: Routes.totalRoutes,
-    page: () => TotalRoutes(isBack: "2"),
-  ),
+  GetPage(name: Routes.totalRoutes, page: () => TotalRoutes(isBack: false)),
   GetPage(name: Routes.routeDetailsScreen, page: () => RouteDetailsScreen()),
 ];

@@ -35,15 +35,10 @@ class PageListController extends GetxController implements GetxService {
 
   deletAccount() async {
     try {
-      Map map = {
-        "rider_id": getData.read("StoreLogin")["id"].toString(),
-      };
+      Map map = {"rider_id": getData.read("StoreLogin")["id"].toString()};
       print(map.toString());
       Uri uri = Uri.parse(Config.path + Config.deletAccount);
-      var response = await http.post(
-        uri,
-        body: jsonEncode(map),
-      );
+      var response = await http.post(uri, body: jsonEncode(map));
 
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);

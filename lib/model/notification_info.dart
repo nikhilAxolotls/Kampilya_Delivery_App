@@ -26,19 +26,21 @@ class NotificationInfo {
   factory NotificationInfo.fromJson(Map<String, dynamic> json) =>
       NotificationInfo(
         notificationData: List<NotificationDatum>.from(
-            json["NotificationData"].map((x) => NotificationDatum.fromJson(x))),
+          json["NotificationData"].map((x) => NotificationDatum.fromJson(x)),
+        ),
         responseCode: json["ResponseCode"],
         result: json["Result"],
         responseMsg: json["ResponseMsg"],
       );
 
   Map<String, dynamic> toJson() => {
-        "NotificationData":
-            List<dynamic>.from(notificationData.map((x) => x.toJson())),
-        "ResponseCode": responseCode,
-        "Result": result,
-        "ResponseMsg": responseMsg,
-      };
+    "NotificationData": List<dynamic>.from(
+      notificationData.map((x) => x.toJson()),
+    ),
+    "ResponseCode": responseCode,
+    "Result": result,
+    "ResponseMsg": responseMsg,
+  };
 }
 
 class NotificationDatum {
@@ -63,9 +65,9 @@ class NotificationDatum {
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "rid": rid,
-        "msg": msg,
-        "date": date.toIso8601String(),
-      };
+    "id": id,
+    "rid": rid,
+    "msg": msg,
+    "date": date.toIso8601String(),
+  };
 }

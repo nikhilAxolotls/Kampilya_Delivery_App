@@ -12,14 +12,9 @@ class DashboardController extends GetxController implements GetxService {
   bool isLoading = false;
   getDashboardData({String? riderID}) async {
     try {
-      Map map = {
-        "rider_id": riderID,
-      };
+      Map map = {"rider_id": riderID};
       Uri uri = Uri.parse(Config.path + Config.dashboard);
-      var response = await http.post(
-        uri,
-        body: jsonEncode(map),
-      );
+      var response = await http.post(uri, body: jsonEncode(map));
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
         print(result.toString());

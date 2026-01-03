@@ -74,7 +74,9 @@ class StoreProduct {
 
   static List<StoreProduct> listFromJson(dynamic json) {
     if (json is List) {
-      return json.map((e) => StoreProduct.fromJson(Map<String, dynamic>.from(e))).toList();
+      return json
+          .map((e) => StoreProduct.fromJson(Map<String, dynamic>.from(e)))
+          .toList();
     }
     return [];
   }

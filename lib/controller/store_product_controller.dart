@@ -9,7 +9,6 @@ import 'package:milkmandeliveryboynew/Api/data_store.dart';
 import 'package:milkmandeliveryboynew/model/user_store_product_model.dart';
 import 'package:milkmandeliveryboynew/onbording_screen.dart';
 
-
 class StoreDataContoller extends GetxController implements GetxService {
   bool isLoading = false;
   StoreDataInfo? storeDataInfo;
@@ -34,20 +33,17 @@ class StoreDataContoller extends GetxController implements GetxService {
       };
       print("Request map: " + map.toString());
       Uri uri = Uri.parse(Config.userPath + Config.userStoreDataApi);
-      var response = await http.post(
-        uri,
-        body: jsonEncode(map),
-      );
+      var response = await http.post(uri, body: jsonEncode(map));
       print("<<<<<<<<Response>>>>>>>>>>" + response.body);
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
         print("Parsed result: " + result.toString());
-        
+
         if (result["StoreInfo"] != null) {
           storeid = result["StoreInfo"]["store_id"]?.toString() ?? "2";
           print("Store ID: " + storeid);
         }
-        
+
         storeDataInfo = StoreDataInfo.fromJson(result);
       } else {
         print("API error: ${response.statusCode}");

@@ -26,36 +26,29 @@ class DynamicPageData {
   factory DynamicPageData.fromJson(Map<String, dynamic> json) =>
       DynamicPageData(
         pagelist: List<Pagelist>.from(
-            json["pagelist"].map((x) => Pagelist.fromJson(x))),
+          json["pagelist"].map((x) => Pagelist.fromJson(x)),
+        ),
         responseCode: json["ResponseCode"],
         result: json["Result"],
         responseMsg: json["ResponseMsg"],
       );
 
   Map<String, dynamic> toJson() => {
-        "pagelist": List<dynamic>.from(pagelist.map((x) => x.toJson())),
-        "ResponseCode": responseCode,
-        "Result": result,
-        "ResponseMsg": responseMsg,
-      };
+    "pagelist": List<dynamic>.from(pagelist.map((x) => x.toJson())),
+    "ResponseCode": responseCode,
+    "Result": result,
+    "ResponseMsg": responseMsg,
+  };
 }
 
 class Pagelist {
-  Pagelist({
-    required this.title,
-    required this.description,
-  });
+  Pagelist({required this.title, required this.description});
 
   String title;
   String description;
 
-  factory Pagelist.fromJson(Map<String, dynamic> json) => Pagelist(
-        title: json["title"],
-        description: json["description"],
-      );
+  factory Pagelist.fromJson(Map<String, dynamic> json) =>
+      Pagelist(title: json["title"], description: json["description"]);
 
-  Map<String, dynamic> toJson() => {
-        "title": title,
-        "description": description,
-      };
+  Map<String, dynamic> toJson() => {"title": title, "description": description};
 }
