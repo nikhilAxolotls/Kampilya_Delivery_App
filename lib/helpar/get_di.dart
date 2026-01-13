@@ -16,5 +16,5 @@ init() async {
   Get.lazyPut(() => PreScriptionControllre());
   Get.lazyPut(() => NotificationController());
   Get.lazyPut(() => PageListController());
-  Get.lazyPut(() => BottomBarController());
+  Get.put(BottomBarController(), permanent: true);
 }

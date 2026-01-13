@@ -51,14 +51,14 @@ class _OrderdetailsScreenState extends State<OrderdetailsScreen> {
   MyOrderController myOrderController = Get.find();
   String oID = Get.arguments["oID"];
 
-  GlobalKey<SfSignaturePadState> _signaturePadKey = GlobalKey();
+  //GlobalKey<SfSignaturePadState> _signaturePadKey = GlobalKey();
   String imageEncoded = "";
 
   @override
   void initState() {
     super.initState();
     setState(() {
-      _signaturePadKey.currentState?.clear();
+      // _signaturePadKey.currentState?.clear();
       imageEncoded = "";
     });
   }
@@ -85,7 +85,7 @@ class _OrderdetailsScreenState extends State<OrderdetailsScreen> {
           return myOrderController.orderInformetionInfo?.orderdata.flowId == "4"
               ? Container(
                   color: WhiteColor,
-                  height: Get.height * 0.09,
+                  height: Get.height * 0.1,
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                     child: Row(
@@ -107,12 +107,12 @@ class _OrderdetailsScreenState extends State<OrderdetailsScreen> {
                                 SizedBox(width: Get.width * 0.02),
                                 Image.asset(
                                   "assets/downarrow.png",
-                                  height: 14,
-                                  width: 14,
+                                  height: 12,
+                                  width: 12,
                                 ),
                               ],
                             ),
-                            SizedBox(height: Get.height * 0.005),
+                            //SizedBox(height: Get.height * 0.005),
                             Text(
                               "Total",
                               style: TextStyle(
@@ -126,14 +126,8 @@ class _OrderdetailsScreenState extends State<OrderdetailsScreen> {
                         InkWell(
                           child: InkWell(
                             onTap: () {
-                              if (imageEncoded != "") {
-                                myOrderController.completeOrderApi(
-                                  orderID: oID,
-                                );
-                                imageEncoded = "";
-                              } else {
-                                showToastMessage("Please Signature");
-                              }
+                              myOrderController.completeOrderApi(orderID: oID);
+                              imageEncoded = "";
                             },
                             child: Container(
                               height: 50,
@@ -706,6 +700,8 @@ class _OrderdetailsScreenState extends State<OrderdetailsScreen> {
                                   ),
                                 )
                               : SizedBox(),
+
+                          /*
                           myOrderController
                                       .orderInformetionInfo
                                       ?.orderdata
@@ -795,7 +791,7 @@ class _OrderdetailsScreenState extends State<OrderdetailsScreen> {
                                     ),
                                   ],
                                 )
-                              : SizedBox(),
+                              : SizedBox(),*/
                         ],
                       )
                     : SizedBox(

@@ -27,7 +27,7 @@ class BottoBarScreen extends StatefulWidget {
 
 class _BottoBarScreenState extends State<BottoBarScreen>
     with TickerProviderStateMixin {
-  BottomBarController bottomBarController = Get.find();
+  BottomBarController bottomBarController = Get.put(BottomBarController());
   RouteController routeController = Get.put(RouteController());
   late int _lastTimeBackButtonWasTapped;
   static const exitTimeInMillis = 2000;
